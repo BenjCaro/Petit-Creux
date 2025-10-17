@@ -1,0 +1,16 @@
+{
+    "name": "carbe/petitcreuxv2",
+    "description": "Projet fin formation Dev Web",
+    "autoload": {
+        "psr-4": {
+            "Carbe\\Petitcreuxv2\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "BenjCaro",
+            "email": "carbenjamin@gmail.com"
+        }
+    ],
+    "require": {}
+}

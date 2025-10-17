@@ -1,0 +1,26 @@
+{
+  "name": "petit-creux-v2",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000P\u0000e\u0000t\u0000i\u0000t\u0000-\u0000C\u0000r\u0000e\u0000u\u0000x\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+     "sass": "sass src/scss/style.scss public/css/style.css --watch"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BenjCaro/Petit-Creux.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/BenjCaro/Petit-Creux/issues"
+  },
+  "homepage": "https://github.com/BenjCaro/Petit-Creux#readme",
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "sass": "^1.93.2"
+  }
+}
