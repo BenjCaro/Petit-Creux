@@ -49,7 +49,7 @@ class UserRepositoryTest extends TestCase {
 
  
     // :?User typer la methodes
-    public function testFindUserWithEmail() :void  {
+    public function testFindUserWithValidEmail() :void  {
     
         $user = $this->userRepository->findUserWithEmail('john.doe@example.com');
 
@@ -57,6 +57,17 @@ class UserRepositoryTest extends TestCase {
         $this->assertSame('Doe', $user->getName());
 
     }
+
+    public function testFindUserWithOtherEmail() :void {
+        $user = $this->userRepository->findUserWithEmail('jane.doe@example.com');
+        $this->assertNull(null);
+    }
+
+    public function testFindUserWithEmptyEmail() :void {
+        $user = $this->userRepository->findUserWithEmail('');
+        $this->assertNull(null);
+    }
+
 }
 
 // .\vendor\bin\phpunit.bat .\src\Tests\UserRepositoryTest.php lancer le test
