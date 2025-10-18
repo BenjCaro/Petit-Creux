@@ -1,6 +1,6 @@
 <?php 
 
-namespace Carbe\App\Models\Repositories;
+namespace Carbe\Petitcreuxv2\Models\Repository;
 use Carbe\Petitcreuxv2\Core\Database;
 
 use PDO;

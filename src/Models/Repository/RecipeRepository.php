@@ -1,14 +1,14 @@
 <?php 
 
-namespace Carbe\App\Models;
+namespace Carbe\Petitcreuxv2\Models\Repository;
 
 
-use Carbe\App\Models\Entities\Ingredient;
-use Carbe\App\Models\Entities\RecipeIngredient;
-use Carbe\App\Models\Repositories\BaseRepository;
-use Carbe\App\Models\Entities\Recipe;
-use Carbe\App\Models\Entities\User;
-use Carbe\App\Models\Entities\Category;
+use Carbe\Petitcreuxv2\Models\Entites\Ingredient;
+use Carbe\Petitcreuxv2\Models\Entites\RecipeIngredient;
+use Carbe\Petitcreuxv2\Models\Repository\BaseRepository;
+use Carbe\Petitcreuxv2\Models\Entites\Recipe;
+use Carbe\Petitcreuxv2\Models\Entites\User;
+use Carbe\Petitcreuxv2\Models\Entites\Category;
 use PDO;
 
 

@@ -1,8 +1,8 @@
 <?php 
 
-namespace Carbe\App\Models;
+namespace Carbe\Petitcreuxv2\Models\Repository;
 
-use Carbe\App\Models\Repositories\BaseRepository;
+use Carbe\Petitcreuxv2\Models\Repository\BaseRepository;
 use PDO;
 
 class IngredientRepository extends BaseRepository {

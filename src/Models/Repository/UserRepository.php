@@ -1,11 +1,11 @@
 <?php 
 
-namespace Carbe\App\Models\Repositories;
-use Carbe\App\Models\Repositories\RecipeModel;
-use Carbe\App\Models\Entities\User;
-use Carbe\App\Models\Entities\Recipe;
-use Carbe\App\Models\Entities\Category;
-use Carbe\App\Models\Repositories\BaseRepository;
+namespace Carbe\Petitcreuxv2\Models\Repository;
+
+use Carbe\Petitcreuxv2\Models\Entites\User;
+use Carbe\Petitcreuxv2\Models\Entites\Recipe;
+use Carbe\Petitcreuxv2\Models\Entites\Category;
+use Carbe\Petitcreuxv2\Models\Repository\BaseRepository;
 use PDO;
 
 class UserRepository extends BaseRepository  {
