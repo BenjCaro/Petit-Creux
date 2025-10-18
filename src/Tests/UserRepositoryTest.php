@@ -1,8 +1,8 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Carbe\App\Models\Entities\User;
-Use Carbe\App\Models\Repositories\UserRepository;
+use Carbe\Petitcreuxv2\Models\Entites\User;
+use Carbe\Petitcreuxv2\Models\Repository\UserRepository;
 use Carbe\Petitcreuxv2\Core\Database;
 
 
@@ -42,13 +42,10 @@ class UserRepositoryTest extends TestCase {
             'role' => 'user'
         ]);
 
-        // Si tu veux ensuite tester ton UserRepository :
-        $this->userRepository = new UserRepository($pdo);
+       Database::createForTest($pdo);
 
-        // Injection de cette connexion dans ta classe Database
-        $testDb = new Database($pdo);
-        Database::setInstance($testDb);
-    }
+    // Création du UserRepository
+    $this->userRepository = new UserRepository($pdo); }
 
  
     // :?User typer la methodes

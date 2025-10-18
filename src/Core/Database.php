@@ -46,6 +46,12 @@ class Database {
         self::$instance = $db;
     }
 
+    public static function createForTest(PDO $pdo): Database {
+        $db = new self($pdo);  
+        self::$instance = $db; 
+        return $db;
+    }
+
     public function getConnect(): PDO {
         return $this->pdo;
     }
