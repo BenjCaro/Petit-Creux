@@ -4,7 +4,8 @@ namespace Carbe\Petitcreuxv2\Models\Entites;
 
 class User {
   
-  private int $id;
+  private ?int $id;
+  private string $username;
   private string $name;
   private string $firstname;
   private string $email;
@@ -19,6 +20,7 @@ class User {
       if (!empty($data)) {
         
             $this->id = $data['id'] ?? null;
+            $this->username = $data['username'];
             $this->name = $data['name'] ?? '';
             $this->firstname = $data['firstname'] ?? '';
             $this->email = $data['email'] ?? '';
@@ -32,12 +34,20 @@ class User {
     }
   
   public function getId() : ?int {
-        return $this->id;
+      return $this->id;
     }
 
   public function setId(int $id) :void {
         $this->id = $id;
     }
+  
+  public function getUsername() :string {
+      return $this->username;
+    }
+
+  public function setUsername(string $username) :void {
+     $this->username = $username;
+  }
 
   public function getName() :string {
     return $this->name;
