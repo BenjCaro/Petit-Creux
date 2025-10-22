@@ -12,7 +12,7 @@ class BaseRepository {
     protected string $table;
 
     public function __construct() {
-        $this->pdo = Database::getInstance()->getConnect();;
+        $this->pdo = Database::getInstance()->getConnect();
     }
 
     public function findById(int $id) :?static

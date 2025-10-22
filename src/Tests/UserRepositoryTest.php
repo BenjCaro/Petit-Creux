@@ -3,6 +3,7 @@
 use PHPUnit\Framework\TestCase;
 use Carbe\Petitcreuxv2\Models\Entites\User;
 use Carbe\Petitcreuxv2\Models\Repository\UserRepository;
+use Carbe\Petitcreuxv2\Models\Repository\BaseRepository;
 use Carbe\Petitcreuxv2\Core\Database;
 
 
@@ -157,6 +158,14 @@ class UserRepositoryTest extends TestCase {
         $this->expectException(\PDOException::class);
         $this->userRepository->createUser($user);
 
+    }
+
+
+    public function testDeleteUserWithId() :void {
+        
+        $this->userRepository->delete(1);
+        $user = $this->userRepository->findById(1);
+        $this->assertNull($user);
     }
 
 
