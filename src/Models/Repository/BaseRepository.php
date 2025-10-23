@@ -1,6 +1,6 @@
 <?php 
 
-namespace Carbe\App\Models\Repositories;
+namespace Carbe\Petitcreuxv2\Models\Repository;
 use Carbe\Petitcreuxv2\Core\Database;
 
 use PDO;
@@ -12,7 +12,7 @@ class BaseRepository {
     protected string $table;
 
     public function __construct() {
-        $this->pdo = Database::getInstance()->getConnect();;
+        $this->pdo = Database::getInstance()->getConnect();
     }
 
     public function findById(int $id) :?static

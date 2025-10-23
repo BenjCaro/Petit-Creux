@@ -1,5 +1,5 @@
 <?php 
-namespace Carbe\App\Models\Entities;
+namespace Carbe\Petitcreuxv2\Models\Entites;
 
 class Ingredient {
 

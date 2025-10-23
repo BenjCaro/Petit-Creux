@@ -1,7 +1,7 @@
 <?php
 
-namespace Carbe\App\Models\Entities;
-use Carbe\App\Models\Entities\Recipe;
+namespace Carbe\Petitcreuxv2\Models\Entites;
+use Carbe\Petitcreuxv2\Models\Entites\Recipe;
 
 class RecipeIngredient {
     

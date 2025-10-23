@@ -1,9 +1,9 @@
 <?php
 
-namespace Carbe\App\Models\Entities;
+namespace Carbe\Petitcreuxv2\Models\Entites;
 
-use Carbe\App\Models\Entities\User;
-use Carbe\App\Models\Entities\Category;
+use Carbe\Petitcreuxv2\Models\Entites\User;
+use Carbe\Petitcreuxv2\Models\Entites\Category;
 
 class Recipe {
 

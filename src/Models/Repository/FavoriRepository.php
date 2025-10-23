@@ -1,7 +1,7 @@
 <?php 
 
-namespace Carbe\App\Models;
-use Carbe\App\Models\Repositories\BaseRepository;
+namespace Carbe\Petitcreuxv2\Models\Repository;
+use Carbe\Petitcreuxv2\Models\Repository\BaseRepository;
 use PDO;
 
 class FavorisRepository extends BaseRepository {

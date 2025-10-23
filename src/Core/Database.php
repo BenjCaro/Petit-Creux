@@ -10,7 +10,14 @@ class Database {
     private static ?Database $instance = null;
     private PDO $pdo;
 
-    private function __construct() {
+    private function __construct(?PDO $pdo = null) {
+
+        if ($pdo) {
+
+            $this->pdo = $pdo;
+            return;
+        }
+
         try {
             
             $host = getenv('DB_HOST');
@@ -33,6 +40,16 @@ class Database {
             self::$instance = new Database();
         }
         return self::$instance;
+    }
+
+    public static function setInstance(Database $db): void {
+        self::$instance = $db;
+    }
+
+    public static function createForTest(PDO $pdo): Database {
+        $db = new self($pdo);  
+        self::$instance = $db; 
+        return $db;
     }
 
     public function getConnect(): PDO {

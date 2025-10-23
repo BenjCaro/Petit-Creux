@@ -8,7 +8,7 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
 
-$db = Database::getInstance()->getConnect();
+// $db = Database::getInstance()->getConnect();
 
-$stmt = $db->query('SELECT NOW()');
-echo 'Connexion OK : ' . $stmt->fetchColumn();
+// $stmt = $db->query('SELECT NOW()');
+// echo 'Connexion OK : ' . $stmt->fetchColumn();

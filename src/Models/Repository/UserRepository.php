@@ -1,11 +1,11 @@
 <?php 
 
-namespace Carbe\App\Models\Repositories;
-use Carbe\App\Models\Repositories\RecipeModel;
-use Carbe\App\Models\Entities\User;
-use Carbe\App\Models\Entities\Recipe;
-use Carbe\App\Models\Entities\Category;
-use Carbe\App\Models\Repositories\BaseRepository;
+namespace Carbe\Petitcreuxv2\Models\Repository;
+
+use Carbe\Petitcreuxv2\Models\Entites\User;
+use Carbe\Petitcreuxv2\Models\Entites\Recipe;
+use Carbe\Petitcreuxv2\Models\Entites\Category;
+use Carbe\Petitcreuxv2\Models\Repository\BaseRepository;
 use PDO;
 
 class UserRepository extends BaseRepository  {
@@ -21,7 +21,7 @@ class UserRepository extends BaseRepository  {
     }
 
 public function findUserWithEmail(string $email) :?User {
-    $stmt = $this->pdo->prepare('SELECT id, name, firstname, password, role FROM users WHERE email = :email');
+    $stmt = $this->pdo->prepare('SELECT id, username, name, firstname, password, role FROM users WHERE email = :email');
     $stmt->execute([
       'email' => $email
     ]);
@@ -38,11 +38,11 @@ public function findUserWithEmail(string $email) :?User {
 
 
 /**
- * @return RecipeModel[]
+ * @return Recipe[]
  */
 
 public function getFavoris(int $userId) :array {
-      $stmt = $this->pdo->prepare("SELECT users.id, users.name AS user_name, firstname, email, role, favoris.id_user, recipes.*, categories.name AS category_name
+      $stmt = $this->pdo->prepare("SELECT users.id, users.username, users.name AS user_name, firstname, email, role, favoris.id_user, recipes.*, categories.name AS category_name
                                   FROM users
                                   JOIN favoris ON favoris.id_user = users.id
                                   JOIN recipes ON favoris.id_recipe = recipes.id
@@ -57,6 +57,7 @@ public function getFavoris(int $userId) :array {
       if (!empty($data)) {
         $this->hydrate([
             'id' => $data[0]['id'], 
+            'username' => $data[0]['username'],
             'name' => $data[0]['user_name'], 
             'firstname' => $data[0]['firstname'],
             'email' => $data[0]['email'],
@@ -93,7 +94,7 @@ public function getFavoris(int $userId) :array {
  */
  
 public function getAllUsers() :?array {
-    $stmt = $this->pdo->prepare('SELECT users.id, users.name, users.firstname, users.email, users.role, users.createdAt 
+    $stmt = $this->pdo->prepare('SELECT users.id, users.username, users.name, users.firstname, users.email, users.role, users.createdAt 
             FROM users 
             WHERE users.role = "user"
             ORDER BY createdAt ');
@@ -117,15 +118,15 @@ public function getAllUsers() :?array {
   }
 
 /**
- * @return Usermodel[]|null
+ * @return User[]|null
  * 
  */
 
-  public function findUserWithName(string $search) :?array {
+  public function findUserWithUsername(string $search) :array {
       $stmt = $this->pdo->prepare('
-      SELECT id, name, firstname, email, role, createdAt
+      SELECT id, username, name, firstname, email, role, createdAt
       FROM users
-      WHERE LOWER(name) LIKE LOWER(:search) OR LOWER(firstname) LIKE LOWER(:search)
+      WHERE LOWER(username) LIKE LOWER(:search)
   ');
   $stmt->execute(['search' => "%$search%"]);
 
@@ -154,17 +155,18 @@ public function getAllUsers() :?array {
   public function createUser(User $user) : bool {
 
      
-      $stmt = $this->pdo->prepare("INSERT INTO users (name, firstname, email, password, role, description, created_at)
-          VALUES (:name, :firstname, :email, :password, :role, :description, :created_at) ");
+      $stmt = $this->pdo->prepare("INSERT INTO users (username, name, firstname, email, password, role, description, createdAt)
+          VALUES (:username, :name, :firstname, :email, :password, :role, :description, :createdAt) ");
 
       return  $stmt->execute([
+            'username' => $user->getUsername(),
             'name' => $user->getName(),
             'firstname' => $user->getFirstname(),
             'email' => $user->getEmail(),
             'password' => $user->getPassword(),
             'role' => $user->getRole(),
             'description' => $user->getDescription(),
-            'created_at' => $user->getCreatedAt(),
+            'createdAt' => $user->getCreatedAt(),
         ]);
   }
 
