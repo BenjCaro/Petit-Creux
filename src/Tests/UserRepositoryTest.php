@@ -23,7 +23,7 @@ class UserRepositoryTest extends TestCase {
         $this->pdo->exec('
             CREATE TABLE users (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                username TEXT NULL,
+                username TEXT UNIQUE NOT NULL,
                 name TEXT,
                 firstname TEXT,
                 email TEXT UNIQUE NOT NULL,
@@ -96,6 +96,11 @@ class UserRepositoryTest extends TestCase {
         $this->assertEmpty($users, "La recherche d'un username inexistant doit renvoyer un tableau vide");
 
 }
+
+/**
+ * 
+ *  Echec test : typeError 
+ */
 
     // public function testFindUserWithNullShouldThrowTypeError(): void
     //     {
