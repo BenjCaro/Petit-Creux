@@ -58,23 +58,23 @@ class UserRepositoryTest extends TestCase {
 
  
     // :?User typer la methodes
-    public function testFindUserWithValidEmail() :void  {
-    
-        $user = $this->userRepository->findUserWithEmail('john.doe@example.com');
-
-        $this->assertInstanceOf(User::class, $user);
-        $this->assertSame('Doe', $user->getName());
-
-    }
 
     public function testFindUserWithOtherEmail() :void {
-        $user = $this->userRepository->findUserWithEmail('jane.doe@example.com');
+        $user = $this->userRepository->findUser('email','jane.doe@example.com');
         $this->assertNull($user);
     }
 
     public function testFindUserWithEmptyEmail() :void {
-        $user = $this->userRepository->findUserWithEmail('');
+        $user = $this->userRepository->findUser('email', '');
+        $user = $this->userRepository->findUser('username', '');
         $this->assertNull($user);
+    }
+
+    public function testFindUserWithValidEmail() :void {
+         $user = $this->userRepository->findUser('email', 'john.doe@example.com');
+
+        $this->assertInstanceOf(User::class, $user);
+        $this->assertSame('Doe', $user->getName());
     }
 
 
@@ -152,7 +152,7 @@ class UserRepositoryTest extends TestCase {
             'username' => 'Janyy',
             'name' => 'Doe',
             'firstname' => 'Jane',
-            'email' => null,
+            'email' => '',
             'password' => password_hash('secret', PASSWORD_DEFAULT),
             'role' => 'user',
             'description' => 'Un utilisateur de test',
@@ -172,6 +172,21 @@ class UserRepositoryTest extends TestCase {
         $user = $this->userRepository->findById(1);
         $this->assertNull($user);
     }
+
+
+    public function testFindUser() :void {
+
+        $user = $this->userRepository->findUser("username", "JohnDoe");
+        $this->assertInstanceOf(User::class, $user);
+        $this->assertSame('Doe', $user->getName());
+    }
+
+    public function testFindUserWrongUsername() :void {
+         
+        $user= $this->userRepository->findUser("username", "Jhon");
+        $this->assertNull($user);
+    }
+
 
 
 }

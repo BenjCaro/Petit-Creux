@@ -20,21 +20,24 @@ class UserRepository extends BaseRepository  {
     
     }
 
-public function findUserWithEmail(string $email) :?User {
-    $stmt = $this->pdo->prepare('SELECT id, username, name, firstname, password, role FROM users WHERE email = :email');
+
+public function findUser(string $field, string $value) :?User {
+    
+    $stmt = $this->pdo->prepare("SELECT id, username, name, firstname, password, role FROM users WHERE $field = :value");
     $stmt->execute([
-      'email' => $email
+      'value' => $value
     ]);
 
-  $result =$stmt->fetch(PDO::FETCH_ASSOC);
+    $result =$stmt->fetch(PDO::FETCH_ASSOC);
 
      if (!$result) {
         return null;
     }
 
-  return new User($result);
-
+    return new User($result);
 }
+
+
 
 
 /**
