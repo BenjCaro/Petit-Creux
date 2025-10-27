@@ -187,6 +187,13 @@ class UserRepositoryTest extends TestCase {
         $this->assertNull($user);
     }
 
+    public function testFindUserThrowsExceptionOnInvalidField(): void  {
+       
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Champs invalide!");
+        $this->userRepository->findUser('password', '1234');
+        
+    }
 
 
 }

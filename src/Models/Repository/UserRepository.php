@@ -7,6 +7,7 @@ use Carbe\Petitcreuxv2\Models\Entites\Recipe;
 use Carbe\Petitcreuxv2\Models\Entites\Category;
 use Carbe\Petitcreuxv2\Models\Repository\BaseRepository;
 use PDO;
+use InvalidArgumentException;
 
 class UserRepository extends BaseRepository  {
    
@@ -20,8 +21,22 @@ class UserRepository extends BaseRepository  {
     
     }
 
+    /**
+     * findUser sert à trouver
+     * 
+     * @return User || null 
+     * @param $field correspond au champs SQL de la table User (ex: email, username)
+     * @param $value correspond à la donnée du champs correspondant (ex: johndoe@mail.com)
+     * 
+     */
 
 public function findUser(string $field, string $value) :?User {
+
+    $fields = ["username", "email"];
+    if (!in_array($field, $fields)) {
+      throw new InvalidArgumentException("Champs invalide!");
+    }
+    
     
     $stmt = $this->pdo->prepare("SELECT id, username, name, firstname, password, role FROM users WHERE $field = :value");
     $stmt->execute([
@@ -36,8 +51,6 @@ public function findUser(string $field, string $value) :?User {
 
     return new User($result);
 }
-
-
 
 
 /**
