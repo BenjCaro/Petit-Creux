@@ -97,17 +97,6 @@ class UserRepositoryTest extends TestCase {
 
 }
 
-/**
- * 
- *  Echec test : typeError 
- */
-
-    // public function testFindUserWithNullShouldThrowTypeError(): void
-    //     {
-    //         $this->expectException(\TypeError::class);
-    //         $this->userRepository->findUserWithName(null);
-    //     }
-
     public function testCreateNewUser() :void {
          
            $user = new User([
@@ -135,36 +124,6 @@ class UserRepositoryTest extends TestCase {
          $this->assertSame('Jane', $row['firstname']);
          $this->assertSame('user', $row['role']);
     }
-
-    /**
-     * UserRepositoryTest::testCreateNewMissingEmailUser
-     * Failed asserting that exception of type "PDOException" is thrown.
-     * 
-     * 
-     * car SQLlite ne déclenche pas PDOexception
-     * 
-     * UserService prendra en gestion les regles de verifications liés aux emails
-     */
-
-    public function testCreateNewMissingEmailUser() :void {
-         
-           $user = new User([
-            'username' => 'Janyy',
-            'name' => 'Doe',
-            'firstname' => 'Jane',
-            'email' => '',
-            'password' => password_hash('secret', PASSWORD_DEFAULT),
-            'role' => 'user',
-            'description' => 'Un utilisateur de test',
-            'createdAt' => ''
-            
-        ]);
-
-        $this->expectException(\PDOException::class);
-        $this->userRepository->createUser($user);
-
-    }
-
 
     public function testDeleteUserWithId() :void {
         

@@ -35,7 +35,7 @@ class UserServices {
         // $token = $data['token'];
         // Csrf::check("register_form", $token, "/register");
 
-        $username = trim($data['username']);
+        $username = trim($data['username'] ?? '');
         $name = trim($data['name'] ?? '');
         $firstname = trim($data['firstname'] ?? '');
         $email = filter_var(trim($data['email'] ?? ''), FILTER_VALIDATE_EMAIL);
@@ -44,7 +44,7 @@ class UserServices {
         $description = trim($data['description'] ?? '');
 
         if(!$username) {
-              throw new ValidationException("Champs Pseudo Obligatoire!");
+            throw new ValidationException("Champs Pseudo Obligatoire!");
         } elseif(!$this->availableUsername($username)) {
             throw new ValidationException("Pseudo déja existant");
         }
@@ -137,6 +137,6 @@ class UserServices {
 
 
 
-     }
+}
 
    
