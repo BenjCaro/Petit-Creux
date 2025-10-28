@@ -24,7 +24,7 @@ class UserServices {
     
     public function __construct(UserRepository $userRepo) {
         $this->userRepo = $userRepo;
-      //  $this->recipeRepo = $recipeRepo;
+      // $this->recipeRepo = $recipeRepo;
       // $this->postRepo = $postRepo;
         
     }
