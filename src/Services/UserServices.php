@@ -9,7 +9,7 @@ use Exception;
 use Carbe\Petitcreuxv2\Helpers\Csrf;
 use Carbe\Petitcreuxv2\Models\Entites\User;
 use Carbe\Petitcreuxv2\Exceptions\ValidationException;
-use PHPUnit\TextUI\XmlConfiguration\ValidationResult;
+
 
 class UserServices {
 
@@ -32,8 +32,8 @@ class UserServices {
 
     public function registerUser(array $data) :?User {
 
-        // $token = $data['token'];
-        // Csrf::check("register_form", $token, "/register");
+        $token = $data['token'];
+        Csrf::check("register_form", $token, "/register");
 
         $username = trim($data['username'] ?? '');
         $name = trim($data['name'] ?? '');
@@ -43,33 +43,37 @@ class UserServices {
         $confirm = trim($data['confirm-password'] ?? '');
         $description = trim($data['description'] ?? '');
 
+        $errors = [];
+
         if(!$username) {
-            throw new ValidationException("Champs Pseudo Obligatoire!");
+            $errors['username'] = "Champs Pseudo Obligatoire!";
         } elseif(!$this->availableUsername($username)) {
-            throw new ValidationException("Pseudo déja existant");
+             $errors['username'] = "Pseudo déja existant";
         }
 
         if (!$email) { 
-            throw new ValidationException("Adresse Email invalide!");
+             $errors['email'] = "Adresse Email invalide!";
         
         } elseif (!$this->availableEmail($email)) {
-            throw new ValidationException("L'Adresse e-mail déjà utilisée.");
+             $errors['email'] = "L'Adresse e-mail déjà utilisée.";
         }
 
         if (strlen($password) < 8) {
-            throw new ValidationException("Le mot de passe doit contenir au moins 8 caractères.");
+            $errors['password'] = "Le mot de passe doit contenir au moins 8 caractères.";
+        
         }
 
         if ($password !== $confirm) {
-            throw new ValidationException("Les mots de passe ne correspondent pas.");
+            $errors['password'] ="Les mots de passe ne correspondent pas.";
         }
 
         if (empty($name)) {
-            throw new ValidationException("Champs Nom Obligatoire");
+            $errors['name'] ="Champs Nom Obligatoire";
         }
 
         if (empty($firstname)) {
-            throw new ValidationException("Champs Prénom Obligatoire");
+
+          $errors['firstname'] = "Champs Prénom Obligatoire";
         }
 
         if (!empty($description)) {
@@ -78,7 +82,11 @@ class UserServices {
         }
 
         if (strlen($description) > 500) {
-            throw new ValidationException("La description ne peut pas dépasser 500 caractères.");
+            $errors['descritpion'] = "La description ne peut pas dépasser 500 caractères.";
+        }
+
+        if(!empty($errors)) {
+            throw new ValidationException($errors);
         }
 
         // Insertion en base 

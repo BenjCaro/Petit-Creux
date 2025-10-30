@@ -2,6 +2,7 @@
 
 namespace Carbe\Petitcreuxv2\Controllers;
 
+use Carbe\Petitcreuxv2\Exceptions\ValidationException;
 use Carbe\Petitcreuxv2\Services\UserServices;
 use Carbe\Petitcreuxv2\Helpers\Flash;
 
@@ -35,6 +36,26 @@ class UserController extends BaseController {
      */
 
     public function register() {
+
+        session_start();
+        $_SESSION['old'] = $_POST;
+
+        try {
+
+          $this->userServices->registerUser($_POST);
+          Flash::set("Inscription Réussie", "success");
+          header("location: /home");
+          exit;
+
+        } catch(ValidationException $e) {
+
+            foreach($e->getErrors() as $field => $message) {
+                Flash::setErrorsForm($field, $message);
+            }
+            header("location: /register");
+            exit;
+
+        }
          
     }
     
