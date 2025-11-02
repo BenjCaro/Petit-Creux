@@ -32,8 +32,8 @@ class UserServices {
 
     public function registerUser(array $data) :?User {
 
-        $token = $data['token'];
-        Csrf::check("register_form", $token, "/register");
+        // $token = $data['token'];
+        // Csrf::check("register_form", $token, "/register");
 
         $username = trim($data['username'] ?? '');
         $name = trim($data['name'] ?? '');
@@ -59,12 +59,12 @@ class UserServices {
         }
 
         if (strlen($password) < 8) {
-            $errors['password'] = "Le mot de passe doit contenir au moins 8 caractères.";
+            $errors['password_length'] = "Le mot de passe doit contenir au moins 8 caractères.";
         
         }
 
         if ($password !== $confirm) {
-            $errors['password'] ="Les mots de passe ne correspondent pas.";
+            $errors['password_match'] ="Les mots de passe ne correspondent pas.";
         }
 
         if (empty($name)) {

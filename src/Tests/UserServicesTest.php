@@ -87,9 +87,17 @@ class UserServicesTest extends TestCase {
             'createdAt' => '27.10.2025'
         ];
 
-        $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage("Adresse Email invalide!");
-        $this->userService->registerUser($data);
+        try {
+            $this->userService->registerUser($data);
+            $this->fail("Une ValidationException aurait dû être levée !");
+        } catch(ValidationException $e) {
+            
+            $errors = $e->getErrors();
+            $this->assertArrayHasKey('email', $errors);
+            $this->assertEquals("Adresse Email invalide!", $errors['email']);
+
+        }
+        
 
         
     }
@@ -107,105 +115,86 @@ class UserServicesTest extends TestCase {
             'createdAt' => '27.10.2025'
         ];
 
-        $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage("Adresse Email invalide!");
-        $this->userService->registerUser($data);
+        try {
+
+            $this->userService->registerUser($data);
+            $this->fail("Une ValidationException aurait dû être levée !");
+
+        } catch(ValidationException $e) {
+
+            $errors = $e->getErrors();
+            $this->assertArrayHasKey('email', $errors);
+            $this->assertEquals("Adresse Email invalide!", $errors['email']);
+
+        }
+        
     }
 
-    public function testRegisterUserLess8charactersPwd() :void {
-        
-          $data = [
-            'username' => "Johnny",
-            'email' => "johndoe@mail.com",
-            'name' => 'Doe',
-            'firstname' => 'John',
-            'password' => '1234567',
-            'confirm-password' => '1234567',
-            'description' => 'Bonjour, je réalise un test!',
-            'createdAt' => '27.10.2025'
-        ];
+    
 
-        $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage("Le mot de passe doit contenir au moins 8 caractères.");
-        $this->userService->registerUser($data);
-    }
+    public function testRegisterUserWithAExistingMail() :void {
 
-    public function testRegisterUserDifferentConfirmedPwd() :void {
-        
-          $data = [
+        $data = [
             'username' => "Johnny",
-            'email' => "johndoe@mail.com",
+            'email' => 'jane.doe@example.com',
             'name' => 'Doe',
             'firstname' => 'John',
             'password' => '12345678',
-            'confirm-password' => '12345679',
+            'confirm-password' => '12345678',
             'description' => 'Bonjour, je réalise un test!',
             'createdAt' => '27.10.2025'
         ];
 
-        $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage("Les mots de passe ne correspondent pas.");
-        $this->userService->registerUser($data);
-    }
+        try {
 
-    public function testRegisterUserWithExistingMail() :void {
+            $this->userService->registerUser($data);
+            $this->fail("Une ValidationException aurait dû être levée !");
 
-        $data = ['username' => 'Jane123',
-                'name' => 'Doe',
-                'firstname' => 'Jane',
-                'email' => 'jane.doe@example.com',
-                'description' => 'Bonjour, je réalise un test!',
-                'password' => 'password123',
-                'confirm-password' => 'password123',
-                'role' => 'user',
-                'createdAt' => '27.10.2025'];
+        } catch(ValidationException $e) {
 
-        $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage("L'Adresse e-mail déjà utilisée.");
-        $this->userService->registerUser($data);
+            $errors = $e->getErrors();
+            $this->assertArrayHasKey('email', $errors);
+            $this->assertEquals("L'Adresse e-mail déjà utilisée.", $errors['email']);
+
+        }
 
     }
 
+    public function testRegisterUserWithManyErrors(): void {
+        
+        $data = [
+            'username' => "Jane12",  // 1ere exception
+            'email' => "john@doe.fr",
+            'name' => null, // 2eme exception
+            'firstname' => 'John',
+            'password' => '1234678', // 3eme exception
+            'confirm-password' => '1234567', // 4eme exception
+            'description' => 'Bonjour, je réalise un test!',
+            'createdAt' => '27.10.2025'
+        ];
 
-    public function testRegisterUserWithExistingUsername() :void {
+        try {
 
-        $data = ['username' => 'Jane12',
-                'name' => 'Doe',
-                'firstname' => 'Jane',
-                'email' => 'jane12.doe@example.com',
-                'description' => 'Bonjour, je réalise un test!',
-                'password' => 'password123',
-                'confirm-password' => 'password123',
-                'role' => 'user',
-                'createdAt' => '27.10.2025'];
+            $this->userService->registerUser($data);
+            $this->fail("Une ValidationException aurait dû être levée !");
+        } catch(ValidationException $e) {
 
-        $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage("Pseudo déja existant");
-        $this->userService->registerUser($data);
+            $errors = $e->getErrors();
+            $this->assertArrayHasKey('username', $errors);
+            $this->assertArrayHasKey('name', $errors);
+            $this->assertArrayHasKey('password_length', $errors);
+            $this->assertArrayHasKey('password_match', $errors);
+
+            $this->assertEquals("Pseudo déja existant", $errors['username']);
+            $this->assertEquals("Champs Nom Obligatoire", $errors['name']);
+            $this->assertEquals("Le mot de passe doit contenir au moins 8 caractères.", $errors['password_length']);
+            $this->assertEquals("Les mots de passe ne correspondent pas.", $errors['password_match']);
+        }
+
 
     }
 
-
-    public function testRegisterUserWithNullUsername() :void {
-
-        $data = ['username' => null,
-                'name' => 'Doe',
-                'firstname' => 'Jane',
-                'email' => 'jane12.doe@example.com',
-                'description' => 'Bonjour, je réalise un test!',
-                'password' => 'password123',
-                'confirm-password' => 'password123',
-                'role' => 'user',
-                'createdAt' => '27.10.2025'];
-
-        $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage("Champs Pseudo Obligatoire!");
-        $this->userService->registerUser($data);
-
-    }
-
-
-     
+ 
 }
 
 
