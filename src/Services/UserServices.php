@@ -34,16 +34,19 @@ class UserServices {
 
         // $token = $data['token'];
         // Csrf::check("register_form", $token, "/register");
+        
+        $username = $data['username'] ?? '';
+        $name = $data['name'] ?? '';
+        $firstname = $data['firstname'] ?? '';
+        $email = $data['email'] ?? '';
+        $password = $data['password'] ?? '';
+        $confirm = $data['confirm-password'] ?? '';
+        $description = $data['description'] ??'';
 
-        $username = trim($data['username'] ?? '');
-        $name = trim($data['name'] ?? '');
-        $firstname = trim($data['firstname'] ?? '');
-        $email = filter_var(trim($data['email'] ?? ''), FILTER_VALIDATE_EMAIL);
-        $password = trim($data['password'] ?? '');
-        $confirm = trim($data['confirm-password'] ?? '');
-        $description = trim($data['description'] ?? '');
 
         $errors = [];
+
+        // ajouter des règles métiers supplémentaires
 
         if(!$username) {
             $errors['username'] = "Champs Pseudo Obligatoire!";
@@ -76,13 +79,8 @@ class UserServices {
           $errors['firstname'] = "Champs Prénom Obligatoire";
         }
 
-        if (!empty($description)) {
-            // Supprimer les balises HTML (sécurité)
-            $description = strip_tags($description);
-        }
-
         if (strlen($description) > 500) {
-            $errors['descritpion'] = "La description ne peut pas dépasser 500 caractères.";
+            $errors['description'] = "La description ne peut pas dépasser 500 caractères.";
         }
 
         if(!empty($errors)) {
@@ -91,13 +89,13 @@ class UserServices {
 
         // Insertion en base 
 
-          $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+          
           $userData = [
             'username' => $username,
             'name' => $name,
             'firstname' => $firstname,
             'email' => $email,
-            'password' => $hashedPassword,
+            'password' => $password,
             'description' => $description
            ];
 

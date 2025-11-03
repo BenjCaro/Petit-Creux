@@ -194,6 +194,32 @@ class UserServicesTest extends TestCase {
 
     }
 
+    public function testRegisterUserDescriptionWithHtmlTags() :void {
+
+        $data = [
+            'username' => "Johnny",
+            'email' => "johndoe@mail.com",
+            'name' => 'Doe',
+            'firstname' => 'John',
+            'password' => '12345678',
+            'confirm-password' => '12345678',
+            'description' => 'Bonjour Je réalise un test!',
+            'createdAt' => '27.10.2025'
+        ];
+
+
+       $this->userService->registerUser($data);
+
+       $users = $this->userRepo->findUserWithUsername("Johnny");
+       $this->assertIsArray($users);
+       $this->assertNotEmpty($users);
+       $this->assertInstanceOf(User::class, $users[0]);
+       $this->assertSame('Doe', $users[0]->getName());
+       $this->assertSame("Bonjour Je réalise un test!", $users[0]->getDescription());
+
+    
+    }
+
  
 }
 

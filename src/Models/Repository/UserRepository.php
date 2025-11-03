@@ -140,7 +140,7 @@ public function getAllUsers() :?array {
 
   public function findUserWithUsername(string $search) :array {
       $stmt = $this->pdo->prepare('
-      SELECT id, username, name, firstname, email, role, createdAt
+      SELECT id, username, name, firstname, email, role, description, createdAt
       FROM users
       WHERE LOWER(username) LIKE LOWER(:search)
   ');
