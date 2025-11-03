@@ -98,8 +98,6 @@ class UserServicesTest extends TestCase {
 
         }
         
-
-        
     }
 
       public function testRegisterUserWithNull() :void {

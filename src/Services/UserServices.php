@@ -46,8 +46,6 @@ class UserServices {
 
         $errors = [];
 
-        // ajouter des règles métiers supplémentaires
-
         if(!$username) {
             $errors['username'] = "Champs Pseudo Obligatoire!";
         } elseif(!$this->availableUsername($username)) {
@@ -89,7 +87,6 @@ class UserServices {
 
         // Insertion en base 
 
-          
           $userData = [
             'username' => $username,
             'name' => $name,
@@ -105,6 +102,45 @@ class UserServices {
         return $created ? $user : null;
 
 
+    }
+
+    /**
+     * Gestion de la connexion utilisateur
+     * 
+     */
+
+    public function logIn(string $token, string $email, string $password) :void {
+
+        session_start();
+        Csrf::check("login", $token, "/login");
+
+
+        $errors = [];
+
+        if(empty($email) || empty($password)) {
+            $errors["log"] = "Champs Vides!";
+    
+        }
+
+        $auth_user = $this->userRepo->findUser("email", $email);
+        if(!$auth_user) {
+            $errors['email'] = "L'adresse email ne correspond à aucun utilisateur";   
+
+        }
+
+        elseif(!password_verify($password, $auth_user->getPassword())) {
+           
+            $errors["password"] = "Mot de passe invalide";
+        }
+
+        if (!empty($errors)) {
+            throw new ValidationException($errors);
+        }
+
+        $_SESSION['auth_user'] = [
+                'id' => $auth_user->getId(),
+                'role' => $auth_user->getRole()
+        ];
     }
 
     private function availableEmail(string $email, ?int $currentUserId = null): bool {

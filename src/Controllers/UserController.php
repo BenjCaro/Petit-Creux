@@ -24,8 +24,21 @@ class UserController extends BaseController {
     public function registerForm() :void {
         
         $this->render("/register", [
-            'title' => 'Petit Creux |Inscription'
+            'title' => 'Petit Creux | Inscription'
         ]);
+    }
+
+    /**
+     * Page de connexion
+     * 
+     */
+
+    public function loginForm() :void {
+
+        $this->render("/login", [
+            'title' => 'Petit Creux | Connexion'
+        ]);
+
     }
 
     /**
@@ -35,7 +48,7 @@ class UserController extends BaseController {
      * 
      */
 
-    public function register() {
+    public function register() :void {
 
         session_start();
         $_SESSION['old'] = $_POST;
@@ -57,6 +70,34 @@ class UserController extends BaseController {
 
         }
          
+    }
+
+
+    /**
+     *  Connexion par un utilisateur 
+     * 
+     */
+
+    public function connexion() :void {
+        session_start();
+        $email = $_POST['email'];
+        $token = $_POST['token'];
+        $password = $_POST['password'];
+        $_SESSION['old'] = $email;
+
+        try {
+
+            $this->userServices->logIn($token, $email, $password);
+            Flash::set("Connexion Réussie.", "success");
+            exit;
+
+        } catch(ValidationException $e) {
+            foreach($e->getErrors() as $field => $message) {
+                Flash::setErrorsForm($field, $message);
+            }
+            header("location: /login");
+            exit;
+        }
     }
     
 }
