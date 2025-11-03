@@ -94,7 +94,7 @@ class UserServicesTest extends TestCase {
             
             $errors = $e->getErrors();
             $this->assertArrayHasKey('email', $errors);
-            $this->assertEquals("Adresse Email invalide!", $errors['email']);
+            $this->assertEquals("Champs Email Obligatoire", $errors['email']);
 
         }
         
@@ -124,7 +124,7 @@ class UserServicesTest extends TestCase {
 
             $errors = $e->getErrors();
             $this->assertArrayHasKey('email', $errors);
-            $this->assertEquals("Adresse Email invalide!", $errors['email']);
+            $this->assertEquals("Champs Email Obligatoire", $errors['email']);
 
         }
         

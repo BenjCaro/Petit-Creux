@@ -55,7 +55,7 @@ class UserServices {
         }
 
         if (!$email) { 
-             $errors['email'] = "Adresse Email invalide!";
+             $errors['email'] = "Champs Email Obligatoire";
         
         } elseif (!$this->availableEmail($email)) {
              $errors['email'] = "L'Adresse e-mail déjà utilisée.";

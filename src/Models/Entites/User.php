@@ -2,6 +2,8 @@
 
 namespace Carbe\Petitcreuxv2\Models\Entites;
 
+use Carbe\Petitcreuxv2\Exceptions\ValidationException;
+
 class User {
   
   private ?int $id;
@@ -69,9 +71,14 @@ public function getEmail() :string {
   }
 
 public function setEmail(string $email) :void {
-    $this->email = filter_var(trim($email), FILTER_VALIDATE_EMAIL);
+    
+    if(!filter_var(trim($email), FILTER_VALIDATE_EMAIL)) {
+       throw new ValidationException(['email' => "L'email est invalide"]);
 
-    // gérer l'exception
+    } else {
+      $this->email = filter_var(trim($email), FILTER_VALIDATE_EMAIL);
+    }
+    
   }
 
 public function getPassword() :string {

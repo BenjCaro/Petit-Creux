@@ -38,7 +38,7 @@ public function findUser(string $field, string $value) :?User {
     }
     
     
-    $stmt = $this->pdo->prepare("SELECT id, username, name, firstname, password, role FROM users WHERE $field = :value");
+    $stmt = $this->pdo->prepare("SELECT id, username, name, firstname, email, password, role FROM users WHERE $field = :value");
     $stmt->execute([
       'value' => $value
     ]);
