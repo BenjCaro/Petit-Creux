@@ -58,23 +58,23 @@ class UserRepositoryTest extends TestCase {
 
  
     // :?User typer la methodes
-    public function testFindUserWithValidEmail() :void  {
-    
-        $user = $this->userRepository->findUserWithEmail('john.doe@example.com');
-
-        $this->assertInstanceOf(User::class, $user);
-        $this->assertSame('Doe', $user->getName());
-
-    }
 
     public function testFindUserWithOtherEmail() :void {
-        $user = $this->userRepository->findUserWithEmail('jane.doe@example.com');
+        $user = $this->userRepository->findUser('email','jane.doe@example.com');
         $this->assertNull($user);
     }
 
     public function testFindUserWithEmptyEmail() :void {
-        $user = $this->userRepository->findUserWithEmail('');
+        $user = $this->userRepository->findUser('email', '');
+        $user = $this->userRepository->findUser('username', '');
         $this->assertNull($user);
+    }
+
+    public function testFindUserWithValidEmail() :void {
+         $user = $this->userRepository->findUser('email', 'john.doe@example.com');
+
+        $this->assertInstanceOf(User::class, $user);
+        $this->assertSame('Doe', $user->getName());
     }
 
 
@@ -96,17 +96,6 @@ class UserRepositoryTest extends TestCase {
         $this->assertEmpty($users, "La recherche d'un username inexistant doit renvoyer un tableau vide");
 
 }
-
-/**
- * 
- *  Echec test : typeError 
- */
-
-    // public function testFindUserWithNullShouldThrowTypeError(): void
-    //     {
-    //         $this->expectException(\TypeError::class);
-    //         $this->userRepository->findUserWithName(null);
-    //     }
 
     public function testCreateNewUser() :void {
          
@@ -136,36 +125,6 @@ class UserRepositoryTest extends TestCase {
          $this->assertSame('user', $row['role']);
     }
 
-    /**
-     * UserRepositoryTest::testCreateNewMissingEmailUser
-     * Failed asserting that exception of type "PDOException" is thrown.
-     * 
-     * 
-     * car SQLlite ne déclenche pas PDOexception
-     * 
-     * UserService prendra en gestion les regles de verifications liés aux emails
-     */
-
-    public function testCreateNewMissingEmailUser() :void {
-         
-           $user = new User([
-            'username' => 'Janyy',
-            'name' => 'Doe',
-            'firstname' => 'Jane',
-            'email' => null,
-            'password' => password_hash('secret', PASSWORD_DEFAULT),
-            'role' => 'user',
-            'description' => 'Un utilisateur de test',
-            'createdAt' => ''
-            
-        ]);
-
-        $this->expectException(\PDOException::class);
-        $this->userRepository->createUser($user);
-
-    }
-
-
     public function testDeleteUserWithId() :void {
         
         $this->userRepository->delete(1);
@@ -173,6 +132,27 @@ class UserRepositoryTest extends TestCase {
         $this->assertNull($user);
     }
 
+
+    public function testFindUser() :void {
+
+        $user = $this->userRepository->findUser("username", "JohnDoe");
+        $this->assertInstanceOf(User::class, $user);
+        $this->assertSame('Doe', $user->getName());
+    }
+
+    public function testFindUserWrongUsername() :void {
+         
+        $user= $this->userRepository->findUser("username", "Jhon");
+        $this->assertNull($user);
+    }
+
+    public function testFindUserThrowsExceptionOnInvalidField(): void  {
+       
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Champs invalide!");
+        $this->userRepository->findUser('password', '1234');
+        
+    }
 
 }
 

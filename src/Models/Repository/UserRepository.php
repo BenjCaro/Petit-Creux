@@ -7,6 +7,7 @@ use Carbe\Petitcreuxv2\Models\Entites\Recipe;
 use Carbe\Petitcreuxv2\Models\Entites\Category;
 use Carbe\Petitcreuxv2\Models\Repository\BaseRepository;
 use PDO;
+use InvalidArgumentException;
 
 class UserRepository extends BaseRepository  {
    
@@ -20,20 +21,35 @@ class UserRepository extends BaseRepository  {
     
     }
 
-public function findUserWithEmail(string $email) :?User {
-    $stmt = $this->pdo->prepare('SELECT id, username, name, firstname, password, role FROM users WHERE email = :email');
+    /**
+     * findUser sert à trouver
+     * 
+     * @return User || null 
+     * @param $field correspond au champs SQL de la table User (ex: email, username)
+     * @param $value correspond à la donnée du champs correspondant (ex: johndoe@mail.com)
+     * 
+     */
+
+public function findUser(string $field, string $value) :?User {
+
+    $fields = ["username", "email"];
+    if (!in_array($field, $fields)) {
+      throw new InvalidArgumentException("Champs invalide!");
+    }
+    
+    
+    $stmt = $this->pdo->prepare("SELECT id, username, name, firstname, email, password, role FROM users WHERE $field = :value");
     $stmt->execute([
-      'email' => $email
+      'value' => $value
     ]);
 
-  $result =$stmt->fetch(PDO::FETCH_ASSOC);
+    $result =$stmt->fetch(PDO::FETCH_ASSOC);
 
      if (!$result) {
         return null;
     }
 
-  return new User($result);
-
+    return new User($result);
 }
 
 
@@ -124,7 +140,7 @@ public function getAllUsers() :?array {
 
   public function findUserWithUsername(string $search) :array {
       $stmt = $this->pdo->prepare('
-      SELECT id, username, name, firstname, email, role, createdAt
+      SELECT id, username, name, firstname, email, role, description, createdAt
       FROM users
       WHERE LOWER(username) LIKE LOWER(:search)
   ');

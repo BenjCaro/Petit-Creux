@@ -2,6 +2,8 @@
 
 namespace Carbe\Petitcreuxv2\Models\Entites;
 
+use Carbe\Petitcreuxv2\Exceptions\ValidationException;
+
 class User {
   
   private ?int $id;
@@ -11,33 +13,31 @@ class User {
   private string $email;
   private string $password;
   private string $role;
-  private ?string $description;
+  private string $description = "J'aime la communauté Petit Creux!";
   private string $createdAt; 
 
+  
+      
   public function __construct(array $data = []) {
-        
-       
-      if (!empty($data)) {
-        
-            $this->id = $data['id'] ?? null;
-            $this->username = $data['username'];
-            $this->name = $data['name'] ?? '';
-            $this->firstname = $data['firstname'] ?? '';
-            $this->email = $data['email'] ?? '';
-            $this->password = $data['password'] ?? ''; 
-            $this->role = $data['role'] ?? 'user';
-            $this->description = $data['description'] ?? null;
-            $this->createdAt = $data['created_at'] ?? date('Y-m-d');
-
-      }
-
+        if (!empty($data)) {
+            $this->setId($data['id']);
+            $this->setUsername($data['username'] ?? '');
+            $this->setName($data['name'] ?? '');
+            $this->setFirstname($data['firstname'] ?? '');
+            $this->setEmail($data['email'] ?? '');
+            $this->setPassword($data['password'] ?? '');
+            $this->setRole($data['role'] ?? 'user');
+            $this->setDescription($data['description'] ?? null);
+            $this->setCreatedAt($data['created_at'] ?? date('Y-m-d'));
+        }
     }
+    
   
   public function getId() : ?int {
       return $this->id;
     }
 
-  public function setId(int $id) :void {
+  public function setId(?int $id) :void {
         $this->id = $id;
     }
   
@@ -46,7 +46,7 @@ class User {
     }
 
   public function setUsername(string $username) :void {
-     $this->username = $username;
+     $this->username = trim($username);
   }
 
   public function getName() :string {
@@ -54,7 +54,7 @@ class User {
   }
   
   public function setName(string $name) :void  {
-     $this->name = $name;
+     $this->name = trim($name);
   }
 
 public function getFirstname() :string {
@@ -62,7 +62,7 @@ public function getFirstname() :string {
   }
 
 public function setFirstname(string $firstname) :void {
-    $this->firstname = $firstname;
+    $this->firstname = trim($firstname);
   }
 
 
@@ -71,7 +71,14 @@ public function getEmail() :string {
   }
 
 public function setEmail(string $email) :void {
-    $this->email = $email;
+    
+    if(!filter_var(trim($email), FILTER_VALIDATE_EMAIL)) {
+       throw new ValidationException(['email' => "L'email est invalide"]);
+
+    } else {
+      $this->email = filter_var(trim($email), FILTER_VALIDATE_EMAIL);
+    }
+    
   }
 
 public function getPassword() :string {
@@ -86,19 +93,23 @@ public function getRole() :string {
     return $this->role;
   }
 
-public function setRole(string $role) :void {
+public function setRole(string $role): void {
+    $allowedRoles = ['user', 'admin'];
+    $this->role = in_array($role, $allowedRoles) ? $role : 'user';
+}
 
-    $this->role = $role;
-
-  }
 
 public function getDescription() :string {
      return $this->description;
   }
 
-public function setDescription(?string $description) :void {
-    $this->description = $description;
-  }
+public function setDescription(?string $description): void {
+    // nettoyer la description
+    $clean = $description ? strip_tags(trim($description)) : '';
+    
+    // appliquer la valeur par défaut seulement si vide
+    $this->description = $clean !== '' ? $clean : "J'aime la communauté Petit Creux!";
+}
 
 public function getCreatedAt() :string {
     return date('Y-m-d', strtotime($this->createdAt));
