@@ -8,8 +8,16 @@ define('VIEW_PATH', dirname(__DIR__) . '/src/Templates');
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
+$router= new AltoRouter();
 
-// $db = Database::getInstance()->getConnect();
+require __DIR__ . '/../routes/web.php';
 
-// $stmt = $db->query('SELECT NOW()');
-// echo 'Connexion OK : ' . $stmt->fetchColumn();
+$match = $router->match();
+
+if( is_array($match) && is_callable( $match['target'] ) ) {
+	call_user_func_array( $match['target'], $match['params'] );
+} else {
+	
+	header( $_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');
+}
+

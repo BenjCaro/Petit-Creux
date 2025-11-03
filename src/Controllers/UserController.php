@@ -23,7 +23,7 @@ class UserController extends BaseController {
 
     public function registerForm() :void {
         
-        $this->render("/register", [
+        $this->render("register", [
             'title' => 'Petit Creux | Inscription'
         ]);
     }
@@ -35,7 +35,7 @@ class UserController extends BaseController {
 
     public function loginForm() :void {
 
-        $this->render("/login", [
+        $this->render("login", [
             'title' => 'Petit Creux | Connexion'
         ]);
 
