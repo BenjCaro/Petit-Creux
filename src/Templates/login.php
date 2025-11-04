@@ -28,7 +28,7 @@ use Carbe\Petitcreuxv2\Helpers\Flash;
             <div class="d-flex flex-column">
                 <button class="btn btn-primary" type="submit">Se Connecter</button>
                 <span class="text-center">ou</span>
-                <button class="btn btn-secondary"><a class="nav-link" href="/inscription">Rejoindre Petit Creux!</a></button>
+                <button class="btn btn-secondary"><a class="nav-link" href="/register">Rejoindre Petit Creux!</a></button>
             </div>
             
         </form>

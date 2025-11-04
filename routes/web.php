@@ -19,3 +19,9 @@ $router->map('GET', '/login', function() use ($container) {
     $login = $container->get(UserController::class);
     $login->loginForm();
 });
+
+$router->map('GET', '/register', function() use ($container) {
+
+    $register = $container->get(UserController::class);
+    $register->registerForm();
+});
