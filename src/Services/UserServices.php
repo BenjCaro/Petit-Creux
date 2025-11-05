@@ -111,7 +111,6 @@ class UserServices {
 
     public function logIn(string $token, string $email, string $password) :void {
 
-        session_start();
         Csrf::check("login", $token, "/login");
 
 

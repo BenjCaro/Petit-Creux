@@ -74,12 +74,13 @@ class UserController extends BaseController {
 
 
     /**
-     *  Connexion par un utilisateur 
+     *  Connexion utilisateur 
      * 
      */
 
     public function connexion() :void {
-        
+       
+        session_start();
         $email = $_POST['email'];
         $token = $_POST['_token'];
         $password = $_POST['password'];
