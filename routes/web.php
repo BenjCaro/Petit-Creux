@@ -20,8 +20,21 @@ $router->map('GET', '/login', function() use ($container) {
     $login->loginForm();
 });
 
+
+$router->map('POST', '/login', function() use ($container) {
+
+    $login = $container->get(UserController::class);
+    $login->connexion();
+});
+
 $router->map('GET', '/register', function() use ($container) {
 
     $register = $container->get(UserController::class);
     $register->registerForm();
+});
+
+$router->map('POST', '/register', function() use ($container) {
+
+    $register = $container->get(UserController::class);
+    $register->register();
 });

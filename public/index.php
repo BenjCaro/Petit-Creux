@@ -5,7 +5,7 @@ use Carbe\Petitcreuxv2\Core\Database;
 require __DIR__ . '/../vendor/autoload.php';
 define('VIEW_PATH', dirname(__DIR__) . '/src/Templates');
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv = Dotenv\Dotenv::createUnsafeImmutable(dirname(__DIR__));
 $dotenv->load();
 
 $router= new AltoRouter();

@@ -57,7 +57,7 @@ class UserController extends BaseController {
 
           $this->userServices->registerUser($_POST);
           Flash::set("Inscription Réussie", "success");
-          header("location: /home");
+          header("location: /");
           exit;
 
         } catch(ValidationException $e) {
@@ -79,9 +79,9 @@ class UserController extends BaseController {
      */
 
     public function connexion() :void {
-        session_start();
+        
         $email = $_POST['email'];
-        $token = $_POST['token'];
+        $token = $_POST['_token'];
         $password = $_POST['password'];
         $_SESSION['old'] = $email;
 
@@ -89,6 +89,7 @@ class UserController extends BaseController {
 
             $this->userServices->logIn($token, $email, $password);
             Flash::set("Connexion Réussie.", "success");
+            header("Location: /");
             exit;
 
         } catch(ValidationException $e) {
