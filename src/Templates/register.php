@@ -19,6 +19,11 @@ use Carbe\Petitcreuxv2\Helpers\Flash;
         <form action="/register" method="POST" class="form-control pb-2 border-gris bg-gris shadow-sm p-3 mb-5 bg-body-gris rounded" style="--bs-bg-opacity: .5;">
             <?php $token = Csrf::get("submit");?>
             <input type="hidden" name="_token" value="<?= $token ?>">
+             <div class="mb-3 pt-2">
+                    <label for="username" class="form-label text-cacao fw-bold">Pseudo *</label>
+                    <input type="text" id="username" name="username" class="form-control" value="<?= $old['username'] ?? ''  ?>" required>
+                    
+            </div>
             <div class="mb-3 pt-2">
                     <label for="name" class="form-label text-cacao fw-bold">Nom *</label>
                     <input type="text" id="name" name="name" class="form-control" value="<?= $old['name'] ?? ''  ?>" required>
