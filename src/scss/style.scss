@@ -1,1 +1,27 @@
+$color-primary: #A3B18A;         
+$color-background: #FAF3E0;        
+$accent-orange: #E28C37;          
+$brun-cacao: #5E503F;              
+$gris-ardoise-clair: #D9D9D9;      
+
+
+$primary: $color-primary;
+$secondary: $accent-orange;
+$success: $color-primary;
+$light: $color-background;
+$dark: $brun-cacao;
+$border-color: $gris-ardoise-clair;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "dark": $dark,
+  "light": $light,
+  "cacao": $brun-cacao,
+  "sauge": $color-primary,
+  "orange": $accent-orange,
+  "gris" : $border-color
+);
+
+@import url(fonts.scss);
 @import "../../node_modules/bootstrap/scss/bootstrap";
