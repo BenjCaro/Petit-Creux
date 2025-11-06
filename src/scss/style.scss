@@ -23,5 +23,6 @@ $theme-colors: (
   "gris" : $border-color
 );
 
-@import url(fonts.scss);
+@import './font';
+
 @import "../../node_modules/bootstrap/scss/bootstrap";
