@@ -24,7 +24,7 @@ if (session_status() === PHP_SESSION_NONE) {
         <nav class="navbar navbar-expand-lg bg-primary">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">
-                    <img src="/assets/images/Icone_Petit_Creux.svg" alt="Logo">
+                    <img src="/assets/images/logo/Icone_Petit_Creux.svg" alt="Logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal">
                     <span class="navbar-toggler-icon"></span>

@@ -26,3 +26,11 @@ $theme-colors: (
 @import './font';
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: space-between;
+  font-family: 'Lato';
+}
