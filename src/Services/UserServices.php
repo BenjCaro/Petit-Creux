@@ -86,13 +86,14 @@ class UserServices {
         }
 
         // Insertion en base 
-
+        
+          $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
           $userData = [
             'username' => $username,
             'name' => $name,
             'firstname' => $firstname,
             'email' => $email,
-            'password' => $password,
+            'password' => $hashedPassword,
             'description' => $description
            ];
 
