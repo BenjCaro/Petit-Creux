@@ -62,7 +62,7 @@ class UserController extends BaseController {
         try {
 
           $this->userServices->registerUser($_POST);
-          Flash::set("Inscription Réussie", "success");
+          Flash::set("Inscription Réussie", "primary");
           header("location: /");
           exit;
 
