@@ -32,8 +32,8 @@ class UserServices {
 
     public function registerUser(array $data) :?User {
 
-        // $token = $data['token'];
-        // Csrf::check("register_form", $token, "/register");
+        $token = $data['_token'];
+        Csrf::check("register_form", $token, "/register");
         
         $username = $data['username'] ?? '';
         $name = $data['name'] ?? '';
@@ -86,13 +86,14 @@ class UserServices {
         }
 
         // Insertion en base 
-
+        
+          $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
           $userData = [
             'username' => $username,
             'name' => $name,
             'firstname' => $firstname,
             'email' => $email,
-            'password' => $password,
+            'password' => $hashedPassword,
             'description' => $description
            ];
 
