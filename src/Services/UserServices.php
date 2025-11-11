@@ -32,8 +32,8 @@ class UserServices {
 
     public function registerUser(array $data) :?User {
 
-        // $token = $data['token'];
-        // Csrf::check("register_form", $token, "/register");
+        $token = $data['_token'];
+        Csrf::check("register_form", $token, "/register");
         
         $username = $data['username'] ?? '';
         $name = $data['name'] ?? '';

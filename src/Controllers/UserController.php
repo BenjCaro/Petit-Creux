@@ -23,8 +23,11 @@ class UserController extends BaseController {
 
     public function registerForm() :void {
         
+        $old = $_SESSION['old'] ?? [];
+        unset($_SESSION['old']);
         $this->render("register", [
-            'title' => 'Petit Creux | Inscription'
+            'title' => 'Petit Creux | Inscription',
+            'old' => $old
         ]);
     }
 
@@ -35,8 +38,11 @@ class UserController extends BaseController {
 
     public function loginForm() :void {
 
+        $old = $_SESSION['old'] ?? [];
+        unset($_SESSION['old']);
         $this->render("login", [
-            'title' => 'Petit Creux | Connexion'
+            'title' => 'Petit Creux | Connexion',
+            'old' => $old
         ]);
 
     }
@@ -50,7 +56,7 @@ class UserController extends BaseController {
 
     public function register() :void {
 
-        session_start();
+        
         $_SESSION['old'] = $_POST;
 
         try {
@@ -80,7 +86,7 @@ class UserController extends BaseController {
 
     public function connexion() :void {
        
-        session_start();
+        
         $email = $_POST['email'];
         $token = $_POST['_token'];
         $password = $_POST['password'];

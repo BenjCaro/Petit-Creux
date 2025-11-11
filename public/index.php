@@ -2,6 +2,8 @@
 
 use Carbe\Petitcreuxv2\Core\Database;
 
+session_start();
+
 require __DIR__ . '/../vendor/autoload.php';
 define('VIEW_PATH', dirname(__DIR__) . '/src/Templates');
 
@@ -11,6 +13,7 @@ $dotenv->load();
 $router= new AltoRouter();
 
 require __DIR__ . '/../routes/web.php';
+
 
 $match = $router->match();
 

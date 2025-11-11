@@ -20,10 +20,19 @@ use Carbe\Petitcreuxv2\Helpers\Flash;
             <div class="mb-3 pt-2">
                 <label for="email"  class="form-label">Email</label>
                 <input type="email" value="<?=  $old['email'] ?? ''   ?>" name="email" id="email" class="form-control" required>
+                <?php 
+                     $emailErrors = Flash::showErrorsForm("email");
+                     foreach($emailErrors as $emailError) { ?>
+                        <div class="alert alert-<?= $emailError['type'] ?> mt-2"><?= $emailError['message'] ?></div>
+                <?php   } ?>
             </div>
             <div class="mb-3">
             <label for="password"  class="form-label">Mot de passe</label> 
                 <input type="password" name="password" id="password" class="form-control"  required> 
+                <?php $pwdErrors = Flash::showErrorsForm("password");
+                        foreach($pwdErrors as $pwdError) { ?> 
+                        <div class="alert alert-<?= $pwdError['type'] ?> mt-2"><?= $pwdError['message'] ?></div>
+                <?php } ?>
             </div>
             <div class="d-flex flex-column">
                 <button class="btn btn-primary" type="submit">Se Connecter</button>
