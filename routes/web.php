@@ -38,3 +38,9 @@ $router->map('POST', '/register', function() use ($container) {
     $register = $container->get(UserController::class);
     $register->register();
 });
+
+$router->map('GET', '/logout', function() use ($container) {
+
+    $deconnexion = $container->get(UserController::class);
+    $deconnexion->deconnexion();
+});

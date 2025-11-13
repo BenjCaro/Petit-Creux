@@ -5,6 +5,7 @@ namespace Carbe\Petitcreuxv2\Controllers;
 use Carbe\Petitcreuxv2\Exceptions\ValidationException;
 use Carbe\Petitcreuxv2\Services\UserServices;
 use Carbe\Petitcreuxv2\Helpers\Flash;
+use Carbe\Petitcreuxv2\Helpers\Auth;
 
 class UserController extends BaseController {
     
@@ -108,4 +109,13 @@ class UserController extends BaseController {
         }
     }
     
+    public function deconnexion() :void {
+        
+        Auth::offAuth();
+        $_SESSION = [];
+        Flash::set("Déconnexion réussie, A bientôt", "primary");
+
+        header("Location: /");
+        exit();
+    }
 }
