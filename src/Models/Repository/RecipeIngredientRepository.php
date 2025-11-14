@@ -2,7 +2,7 @@
 
 namespace Carbe\Petitcreuxv2\Models\Repository;
 
-
+use Carbe\Petitcreuxv2\Models\Entites\RecipeIngredient;
 use Carbe\Petitcreuxv2\Models\Repository\BaseRepository;
 
 
@@ -15,6 +15,19 @@ class RecipeIngredientRepository extends BaseRepository {
  */
     public function __construct() {
         parent::__construct();
+    }
+
+    public function createRecipe(int $idRecipe, RecipeIngredient $recipeIngredient) :bool {
+        
+        $stmt = $this->pdo->prepare("INSERT INTO {$this->table} (id_recipe, id_ingredient,  quantity, unit ')
+        VALUES (:ingredients, :id_recipe :quantity, :unit)");
+        return $stmt->execute([
+                'id_ingredient' => $recipeIngredient->getIngredient(),
+                'id_recipe' => $idRecipe,
+                'quantity' =>$recipeIngredient->getQuantity(),
+                'unit' => $recipeIngredient->getUnit()
+
+        ]);
     }
     
     public function deleteByRecipeId(int $idRecipe): bool {

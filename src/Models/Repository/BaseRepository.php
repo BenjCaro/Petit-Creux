@@ -56,22 +56,6 @@ class BaseRepository {
 
     }
 
-/**
- *  @param array<string, mixed> $data
- * 
- *  Ne sera plus utilisée à la fin de la refactorisation totale du projet 
- */
-
-
-public function insert(array $data) :void {
-        $array = array_keys($data);
-        $columns = implode( ", " , $array);
-        $values = ':' . implode(', :', $array);
-
-        $stmt = $this->pdo->prepare("INSERT INTO {$this->table} ($columns) VALUES ($values)"); 
-        $stmt->execute($data);
-
-    }   
 
 /**
  *  @param array<string, mixed> $data

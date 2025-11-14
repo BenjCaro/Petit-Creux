@@ -171,7 +171,7 @@ public function getAllUsers() :?array {
   public function createUser(User $user) : bool {
 
      
-      $stmt = $this->pdo->prepare("INSERT INTO users (username, name, firstname, email, password, role, description, createdAt)
+      $stmt = $this->pdo->prepare("INSERT INTO {$this->table} (username, name, firstname, email, password, role, description, createdAt)
           VALUES (:username, :name, :firstname, :email, :password, :role, :description, :createdAt) ");
 
       return  $stmt->execute([

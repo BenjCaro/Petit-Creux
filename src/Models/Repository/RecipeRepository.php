@@ -22,6 +22,23 @@ class RecipeRepository extends BaseRepository {
         parent::__construct();
     }
 
+public function createRecipe(Recipe $recipe) :bool {
+
+    $stmt = $this->pdo->prepare("INSERT INTO {$this->table} (title, slug, id_user, id_category, createdAt, duration)
+    ) 
+    VALUES (:title, :slug, :id_user, :id_category, :createdAt :duration)");
+
+    return $stmt->execute([
+        'title' => $recipe->getTitle(),
+        'slug' => $recipe->getSlug(),
+        'id_user' => $recipe->getIdUser(),
+        'id_category' => $recipe->getCategory(),
+        'createdAt' => $recipe->getCreatedAt(),
+        'duration' => $recipe->getDuration()
+        
+    ]);
+
+}
 
 /**
  * @return null Si aucune recette n'est trouvée pour le slug donné
