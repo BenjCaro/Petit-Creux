@@ -15,26 +15,26 @@ class Recipe {
     private int $idCategory;
     private string $createdAt;
     private int $duration;
-    private ?string $description;
     private string $state;
     private Category $category;
     private User $user;
-     
+    private Description $description;
 
     public function __construct(array $data = []) {
         
        
       if (!empty($data)) {
         
-          $this->id = $data['id'] ?? null;
-          $this->title = $data['title'] ?? '';
-          $this->slug = $data['slug'] ?? '';
-          $this->idUser = $data['idUser'] ?? '';
-          $this->idCategory = $data['idCategory'] ?? ''; 
-          $this->createdAt = $data['createdAt'] ?? date('Y-m-d');
-          $this->duration = $data['duration'] ?? null;
-          $this->state = $data['state'] ?? date('Y-m-d');
-          $this->category = $data["category"] ?? '';
+          $this->setId($data['id']);
+          $this->setTitle($data['title'] ?? '');
+          $this->setSlug($data['slug'] ?? '');
+          $this->setIdUser($data['idUser'] ?? '');
+          $this->setIdCategory($data['idCategory'] ?? '');
+          $this->setCreatedAt($data['createdAt'] ?? date('Y-m-d'));
+          $this->setDuration($data['duration'] ?? null);
+          $this->setState($data['state'] ??'');
+          $this->setCategory($data["category"] ?? '');
+          $this->setDescription($data['description'] ?? '');
 
       } }
 
@@ -97,14 +97,6 @@ public function setDuration(int $duration) :void {
      $this->duration = $duration;
   }
 
-public function getDescription() :?string {
-     return $this->description;
-  }
-
-public function setDescription(?string $description) :void {
-    $this->description = $description;
-  }
-
 public function getState() :string {
     return $this->state;
 }
@@ -138,5 +130,14 @@ public function getUser() :User {
 public function setUser(User $user) :void{
     $this->user = $user;
 }
+
+public function getDescription() : Description{
+    return $this->description;
+}
+
+/** @param Description $description */
+public function setDescription(Description $description) : void {
+    $this->description = $description;
+} 
 
 }

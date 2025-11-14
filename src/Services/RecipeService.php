@@ -3,6 +3,7 @@
 namespace Carbe\Petitcreuxv2\Services;
 
 use Carbe\Petitcreuxv2\Models\Entites\Recipe;
+use Carbe\Petitcreuxv2\Models\Entites\RecipeIngredient;
 use Carbe\Petitcreuxv2\Models\Repository\RecipeRepository;
 
 class RecipeService {
@@ -14,10 +15,10 @@ class RecipeService {
         $this->recipeRepo = $recipeRepo;
     }
 
-    public function createRecipe(array $data) :?Recipe {
+    // public function createRecipe(array $data) :?Recipe {
 
         
-    }
+    // }
 
 
 }
