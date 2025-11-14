@@ -14,10 +14,12 @@ class RecipeIngredient {
 
     if(!empty($data)) {
 
-        $this->id = $data["id"] ?? '';
-        $this->quantity = $data["quantity"] ?? '';
-        $this->unit = $data["unit"] ?? ''; 
-        $this->ingredient = $data["ingredient"] ?? '';
+        
+        $this->setId($data['id'] ?? '');
+        $this->setQuantity($data['quantity'] ?? '');
+        $this->setUnit($data['unit'] ?? '');
+        $this->setIngredient($data['ingredient'] ?? '');
+
     }
    }
 
