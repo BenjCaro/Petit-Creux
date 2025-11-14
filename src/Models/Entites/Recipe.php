@@ -18,7 +18,7 @@ class Recipe {
     private string $state;
     private Category $category;
     private User $user;
-    private Description $description;
+    private array $description = [];
 
     public function __construct(array $data = []) {
         
@@ -131,12 +131,12 @@ public function setUser(User $user) :void{
     $this->user = $user;
 }
 
-public function getDescription() : Description{
+public function getDescription() : array{
     return $this->description;
 }
 
-/** @param Description $description */
-public function setDescription(Description $description) : void {
+/** @param Description[] $description */
+public function setDescription(array $description) : void {
     $this->description = $description;
 } 
 
