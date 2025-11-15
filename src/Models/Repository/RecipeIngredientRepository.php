@@ -17,7 +17,7 @@ class RecipeIngredientRepository extends BaseRepository {
         parent::__construct();
     }
 
-    public function createRecipe(RecipeIngredient $recipeIngredient) :bool {
+    public function createRecipeIngredient(RecipeIngredient $recipeIngredient) :bool {
         
         $stmt = $this->pdo->prepare("INSERT INTO {$this->table} (id_recipe, id_ingredient,  quantity, unit)
         VALUES (:id_recipe, :id_ingredient :quantity, :unit)");

@@ -118,7 +118,7 @@ class RecipeService {
                     'unit' => $unit[$index]
                 ]);
 
-             $this->recipeIngredientRepo->createRecipe($recipeIngredients);
+             $this->recipeIngredientRepo->createRecipeIngredient($recipeIngredients);
             }
             
 
