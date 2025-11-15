@@ -33,6 +33,10 @@ class BaseRepository {
 
     }
 
+    public function getPdo() :PDO  {
+        return $this->pdo;
+    }
+
  /**
  * @return static[]
  */

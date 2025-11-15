@@ -3,60 +3,66 @@
 namespace Carbe\Petitcreuxv2\Models\Entites;
 use Carbe\Petitcreuxv2\Models\Entites\Recipe;
 
-class RecipeIngredient {
-    
-    private int $id;
+class RecipeIngredient 
+{
+   
+    private int $id_recipe;
+    private int $id_ingredient;
     private int $quantity;
     private string $unit;
-    private Ingredient $ingredient;
 
-   public function __construct(array $data = [])  {
-
-    if(!empty($data)) {
-
-        
-        $this->setId($data['id'] ?? '');
-        $this->setQuantity($data['quantity'] ?? '');
-        $this->setUnit($data['unit'] ?? '');
-        $this->setIngredient($data['ingredient'] ?? '');
-
-    }
-   }
-
-   public function getId() : ?int {
-        return $this->id;
+    public function __construct(array $data = []) 
+    {
+        if (!empty($data)) {
+            
+            $this->setIdRecipe($data['id_recipe'] ?? null);
+            $this->setIdIngredient($data['id_ingredient'] ?? null);
+            $this->setQuantity($data['quantity'] ?? 0);
+            $this->setUnit($data['unit'] ?? '');
+        }
     }
 
-  public function setId(int $id) :void {
-        $this->id = $id;
+   
+    public function getIdRecipe(): int 
+    {
+        return $this->id_recipe;
     }
 
-    public function setIngredient(Ingredient $ingredient): void {
-    $this->ingredient = $ingredient;
+    public function setIdRecipe(int $idRecipe): void 
+    {
+        $this->id_recipe = $idRecipe;
+    }
+
+
+    public function getIdIngredient(): int 
+    {
+        return $this->id_ingredient;
+    }
+
+    public function setIdIngredient(int $idIngredient): void 
+    {
+        $this->id_ingredient = $idIngredient;
+    }
+
     
-    }
-
-
-    public function getIngredient(): Ingredient {
-        return $this->ingredient;
-    }
-
-    public function getQuantity() :int {
+    public function getQuantity(): int 
+    {
         return $this->quantity;
     }
 
-    public function setQuantity(int $quantity) :void {
-            $this->quantity = $quantity;
+    public function setQuantity(int $quantity): void 
+    {
+        $this->quantity = $quantity;
     }
 
-    public function getUnit() :string {
+   
+    public function getUnit(): string 
+    {
         return $this->unit;
     }
 
-    public function setUnit(?string $unit) :void {
-        $this->unit = $unit ?? '';
+    public function setUnit(string $unit): void 
+    {
+        $this->unit = $unit;
     }
-
-
-
 }

@@ -3,18 +3,26 @@
 namespace Carbe\Petitcreuxv2\Services;
 
 use Carbe\Petitcreuxv2\Helpers\Csrf;
+use Exception;
 use Carbe\Petitcreuxv2\Models\Entites\Recipe;
 use Carbe\Petitcreuxv2\Models\Entites\RecipeIngredient;
 use Carbe\Petitcreuxv2\Models\Repository\RecipeRepository;
 use Carbe\Petitcreuxv2\Exceptions\ValidationException;
+use Carbe\Petitcreuxv2\Models\Entites\Description;
+use Carbe\Petitcreuxv2\Models\Repository\DescriptionRepository;
+use Carbe\Petitcreuxv2\Models\Repository\RecipeIngredientRepository;
 
 class RecipeService {
 
     private RecipeRepository $recipeRepo;
+    private RecipeIngredientRepository $recipeIngredientRepo;
+    private DescriptionRepository $descriptionRepo;
 
-    public function __construct(RecipeRepository $recipeRepo)
+    public function __construct(RecipeRepository $recipeRepo, RecipeIngredientRepository $recipeIngredientRepo, DescriptionRepository $descriptionRepo)
     {
         $this->recipeRepo = $recipeRepo;
+        $this->recipeIngredientRepo = $recipeIngredientRepo;
+        $this->descriptionRepo = $descriptionRepo;
     }
 
     public function createRecipe(array $data) //:?Recipe 
@@ -35,7 +43,7 @@ class RecipeService {
         
         // Description 
 
-        $step_number = $data['step_number'];
+        $steps = $data['step_number'];
         $texte = trim($data['texte']);
 
         $errors = [];
@@ -60,7 +68,7 @@ class RecipeService {
             $errors['ingredients'] = "Veuillez selectionner un ingrédient, sa quantité et l'unité.";
         }
 
-        if(empty($step_number)) {
+        if(empty($steps)) {
             $errors['step_number'] = "Veuillez préciser le numéro de l'étape de la recette.";
         }
 
@@ -84,13 +92,41 @@ class RecipeService {
           'duration' => $duration
      ];
 
+
         // Insertion en BDD sur 3 tables liées par id_recipe
+        $pdo = $this->recipeRepo->getPdo();
 
-        $recipe = new Recipe($recipeData);
+        
+        // $recipeIngredients = new RecipeIngredient();
+       
+        // $this->recipeIngredientRepo->createRecipe($idRecipe, $ingredientData);
+        // $this->descriptionRepo($idRecipe, $descriptionData);
 
-        $this->recipeRepo->createRecipe($recipe);
+        
+        try {
 
+           $pdo->beginTransaction();
+           $recipe = new Recipe($recipeData);
+           $recipeCreated = $this->recipeRepo->createRecipe($recipe);
+           $idRecipe = $pdo->lastInsertId();
 
+            foreach($ingredients as $index => $idIgredient) {
+                $recipeIngredients = new RecipeIngredient([
+                    'id_recipe' => $idRecipe,
+                    'id_ingredient' => $idIgredient,
+                    'quantity' => $quantity[$index],
+                    'unit' => $unit[$index]
+                ]);
+
+             $this->recipeIngredientRepo->createRecipe($recipeIngredients);
+            }
+            
+
+           $pdo->commit();
+
+        } catch(Exception $e) {
+            $pdo->rollBack();
+        }
 
         
      }

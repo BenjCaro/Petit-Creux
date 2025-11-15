@@ -17,13 +17,13 @@ class RecipeIngredientRepository extends BaseRepository {
         parent::__construct();
     }
 
-    public function createRecipe(int $idRecipe, RecipeIngredient $recipeIngredient) :bool {
+    public function createRecipe(RecipeIngredient $recipeIngredient) :bool {
         
-        $stmt = $this->pdo->prepare("INSERT INTO {$this->table} (id_recipe, id_ingredient,  quantity, unit ')
-        VALUES (:ingredients, :id_recipe :quantity, :unit)");
+        $stmt = $this->pdo->prepare("INSERT INTO {$this->table} (id_recipe, id_ingredient,  quantity, unit)
+        VALUES (:id_recipe, :id_ingredient :quantity, :unit)");
         return $stmt->execute([
-                'id_ingredient' => $recipeIngredient->getIngredient(),
-                'id_recipe' => $idRecipe,
+                'id_ingredient' => $recipeIngredient->getIdIngredient(),
+                'id_recipe' => $recipeIngredient->getIdRecipe(), 
                 'quantity' =>$recipeIngredient->getQuantity(),
                 'unit' => $recipeIngredient->getUnit()
 
