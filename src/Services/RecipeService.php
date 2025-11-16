@@ -96,18 +96,11 @@ class RecipeService {
         // Insertion en BDD sur 3 tables liées par id_recipe
         $pdo = $this->recipeRepo->getPdo();
 
-        
-        // $recipeIngredients = new RecipeIngredient();
-       
-        // $this->recipeIngredientRepo->createRecipe($idRecipe, $ingredientData);
-        // $this->descriptionRepo($idRecipe, $descriptionData);
-
-        
         try {
 
            $pdo->beginTransaction();
            $recipe = new Recipe($recipeData);
-           $recipeCreated = $this->recipeRepo->createRecipe($recipe);
+           $this->recipeRepo->createRecipe($recipe);
            $idRecipe = $pdo->lastInsertId();
 
             foreach($ingredients as $index => $idIgredient) {
@@ -119,6 +112,16 @@ class RecipeService {
                 ]);
 
              $this->recipeIngredientRepo->createRecipeIngredient($recipeIngredients);
+            }
+
+            foreach($steps as $index => $step) {
+                $description = new Description([
+                    'step_number' => $step,
+                    'texte' => $texte[$index],
+                    'id_recipe' => $idRecipe
+                ]);
+            
+                $this->descriptionRepo->createDescriptionRecipe($description);
             }
             
 

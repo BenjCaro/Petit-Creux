@@ -12,13 +12,13 @@ class DescriptionRepository extends BaseRepository {
         return parent::__construct();
     }
 
-    public function createRecipe(int $idRecipe, Description $description) :bool{
+    public function createDescriptionRecipe(Description $description) :bool{
        $stmt = $this->pdo->prepare("INSERT INTO {$this->table} (step_number, texte, id_recipe)
        VALUES (:step_number, :texte, :id_recipe)");
        return  $stmt->execute([
             'step_number' => $description->getStepNumber(),
             'texte' => $description->getTexte(),
-            'id_recipe' => $idRecipe
+            'id_recipe' => $description->getIdRecipe()
        ]);
     } 
     
