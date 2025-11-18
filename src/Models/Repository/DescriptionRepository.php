@@ -9,7 +9,7 @@ class DescriptionRepository extends BaseRepository {
     
     public function __construct()
     {
-        return parent::__construct();
+        parent::__construct();
     }
 
     public function createDescriptionRecipe(Description $description) :bool{

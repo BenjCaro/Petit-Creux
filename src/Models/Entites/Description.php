@@ -14,9 +14,9 @@ class Description {
   {
     if(!empty($data)) {
         $this->setId($data['id']);
-        $this->setStepNumber($data['step_number'] ?? '');
+        $this->setStepNumber($data['step_number'] ?? 0);
         $this->setTexte($data['texte'] ?? '');
-        $this->setIdRecipe($data['id_recipe'] ?? '');
+        $this->setIdRecipe($data['id_recipe'] ?? 0);
     }
 }
 
