@@ -18,23 +18,30 @@ class Recipe {
     private string $state;
     private Category $category;
     private User $user;
-    private array $description = [];
+  //  private array $description = [];
 
     public function __construct(array $data = []) {
         
        
       if (!empty($data)) {
         
-          $this->setId($data['id']);
+          if (isset($data['id'])) {
+                $this->setId((int)$data['id']);
+            }
           $this->setTitle($data['title'] ?? '');
           $this->setSlug($data['slug'] ?? '');
-          $this->setIdUser($data['idUser'] ?? '');
-          $this->setIdCategory($data['idCategory'] ?? '');
+          $this->setIdUser((int)$data['idUser']);
+          $this->setIdCategory((int)$data['idCategory']);
           $this->setCreatedAt($data['createdAt'] ?? date('Y-m-d'));
-          $this->setDuration($data['duration'] ?? null);
+          $this->setDuration((int)$data['duration']);
           $this->setState($data['state'] ??'');
-          $this->setCategory($data["category"] ?? '');
-          $this->setDescription($data['description'] ?? '');
+          if (isset($data['category']) && $data['category'] instanceof Category) {
+                $this->setCategory($data['category']);
+            }
+            if(isset($data['user']) && $data['user'] instanceof User) {
+                $this->setUser($data['user']);
+            }
+        //  $this->setDescription($data['description'] ?? '');
 
       } }
 
@@ -131,13 +138,13 @@ public function setUser(User $user) :void{
     $this->user = $user;
 }
 
-public function getDescription() : array{
-    return $this->description;
-}
+// public function getDescription() : array{
+//     return $this->description;
+// }
 
-/** @param Description[] $description */
-public function setDescription(array $description) : void {
-    $this->description = $description;
-} 
+// /** @param Description[] $description */
+// public function setDescription(array $description) : void {
+//     $this->description = $description;
+// } 
 
 }

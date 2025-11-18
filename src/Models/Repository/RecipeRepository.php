@@ -25,18 +25,22 @@ class RecipeRepository extends BaseRepository {
 public function createRecipe(Recipe $recipe) :bool {
 
     $stmt = $this->pdo->prepare("INSERT INTO {$this->table} (title, slug, id_user, id_category, createdAt, duration)
-    ) 
-    VALUES (:title, :slug, :id_user, :id_category, :createdAt :duration)");
+     VALUES (:title, :slug, :id_user, :id_category, :createdAt, :duration)");
 
     return $stmt->execute([
         'title' => $recipe->getTitle(),
         'slug' => $recipe->getSlug(),
         'id_user' => $recipe->getIdUser(),
-        'id_category' => $recipe->getCategory(),
+        'id_category' => $recipe->getIdCategory(),
         'createdAt' => $recipe->getCreatedAt(),
         'duration' => $recipe->getDuration()
         
     ]);
+
+    $id = (int)$this->pdo->lastInsertId();
+    $recipe->setId($id);
+
+    return true;
 
 }
 
@@ -100,7 +104,7 @@ public function getRecipeBySlug(string $slug) :?Recipe {
             'quantity' => $row['quantity'],
             'unit' => $row['unit']
         ]);
-        $recipeIngredient->setIngredient($ingredient);
+        // $recipeIngredient->setIngredient($ingredient);
 
         $ingredients[] = $recipeIngredient;
     }

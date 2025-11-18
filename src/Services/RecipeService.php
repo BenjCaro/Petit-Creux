@@ -31,6 +31,7 @@ class RecipeService {
         Csrf::check('addRecipeForm', $token, '/add-recipe');
 
         $title = trim($data['title']);
+        $slug = trim($data["slug"]);
         $idUser = $data['id_user'];
         $idCategory = $data['id_category'];
         $duration = trim($data['duration']);
@@ -86,7 +87,7 @@ class RecipeService {
 
         $recipeData = [
           'title' => $title,
-         // 'slug' => $slug, 
+          'slug' => $slug, 
           'id_user' => $idUser,
           'id_category' => $idCategory,
           'duration' => $duration
