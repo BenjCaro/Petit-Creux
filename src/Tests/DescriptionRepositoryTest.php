@@ -49,3 +49,5 @@ class DescriptionRepositoryTest extends TestCase {
     }
 
    // .\vendor\bin\phpunit.bat .\src\Tests\DescriptionRepositoryTest.php
+
+   // .\vendor\bin\phpunit.bat --display-warnings .\src\Tests\DescriptionRepositoryTest.php

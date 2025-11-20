@@ -13,7 +13,9 @@ class Description {
   public function __construct(array $data = [])
   {
     if(!empty($data)) {
-        $this->setId($data['id']);
+        if (isset($data['id'])) {
+                $this->setId((int)$data['id']);
+            }
         $this->setStepNumber($data['step_number'] ?? 0);
         $this->setTexte($data['texte'] ?? '');
         $this->setIdRecipe($data['id_recipe'] ?? 0);

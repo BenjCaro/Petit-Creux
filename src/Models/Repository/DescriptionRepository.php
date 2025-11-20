@@ -20,6 +20,11 @@ class DescriptionRepository extends BaseRepository {
             'texte' => $description->getTexte(),
             'id_recipe' => $description->getIdRecipe()
        ]);
+
+       $id = (int)$this->pdo->lastInsertId();
+       $description->setId($id);
+
+       return true;
     } 
     
 
