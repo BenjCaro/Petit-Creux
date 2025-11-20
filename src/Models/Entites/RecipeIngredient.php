@@ -15,8 +15,8 @@ class RecipeIngredient
     {
         if (!empty($data)) {
             
-            $this->setIdRecipe($data['id_recipe'] ?? null);
-            $this->setIdIngredient($data['id_ingredient'] ?? null);
+            $this->setIdRecipe((int)$data['id_recipe'] ?? 0);
+            $this->setIdIngredient((int)$data['id_ingredient'] ?? 0);
             $this->setQuantity($data['quantity'] ?? 0);
             $this->setUnit($data['unit'] ?? '');
         }

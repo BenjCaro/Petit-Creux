@@ -20,7 +20,7 @@ class RecipeIngredientRepository extends BaseRepository {
     public function createRecipeIngredient(RecipeIngredient $recipeIngredient) :bool {
         
         $stmt = $this->pdo->prepare("INSERT INTO {$this->table} (id_recipe, id_ingredient,  quantity, unit)
-        VALUES (:id_recipe, :id_ingredient :quantity, :unit)");
+        VALUES (:id_recipe, :id_ingredient, :quantity, :unit)");
         return $stmt->execute([
                 'id_ingredient' => $recipeIngredient->getIdIngredient(),
                 'id_recipe' => $recipeIngredient->getIdRecipe(), 
