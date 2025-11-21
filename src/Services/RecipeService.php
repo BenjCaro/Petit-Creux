@@ -11,6 +11,7 @@ use Carbe\Petitcreuxv2\Exceptions\ValidationException;
 use Carbe\Petitcreuxv2\Models\Entites\Description;
 use Carbe\Petitcreuxv2\Models\Repository\DescriptionRepository;
 use Carbe\Petitcreuxv2\Models\Repository\RecipeIngredientRepository;
+use Carbe\Petitcreuxv2\Helpers\SlugService;
 
 class RecipeService {
 
@@ -31,7 +32,6 @@ class RecipeService {
         // Csrf::check('addRecipeForm', $token, '/add-recipe');
 
         $title = trim($data['title'] ?? '');
-        $slug = trim($data["slug"]);
         $idUser = $data['id_user'];
         $idCategory = $data['id_category'];
         $duration = trim($data['duration']);
@@ -84,6 +84,8 @@ class RecipeService {
 
 
         // convertir le titre en slug
+
+        $slug = SlugService::generateSlug($title);
 
         $recipeData = [
           'title' => $title,
