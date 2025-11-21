@@ -30,7 +30,7 @@ class RecipeService {
         // $token = $data['_token'];
         // Csrf::check('addRecipeForm', $token, '/add-recipe');
 
-        $title = trim($data['title']);
+        $title = trim($data['title'] ?? '');
         $slug = trim($data["slug"]);
         $idUser = $data['id_user'];
         $idCategory = $data['id_category'];
@@ -45,7 +45,7 @@ class RecipeService {
         // Description 
 
         $steps = $data['step_number'];
-        $texte = trim($data['texte']);
+        $texte = $data['texte'];
 
         $errors = [];
 

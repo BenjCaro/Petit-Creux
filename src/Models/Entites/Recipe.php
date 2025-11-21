@@ -30,18 +30,22 @@ class Recipe {
             }
           $this->setTitle($data['title'] ?? '');
           $this->setSlug($data['slug'] ?? '');
-          $this->setIdUser((int)$data['idUser']);
-          $this->setIdCategory((int)$data['idCategory']);
+          
+          $this->setIdUser((int)$data['id_user']);
+          $this->setIdCategory((int)$data['id_category']);
           $this->setCreatedAt($data['createdAt'] ?? date('Y-m-d'));
           $this->setDuration((int)$data['duration']);
           $this->setState($data['state'] ??'');
           if (isset($data['category']) && $data['category'] instanceof Category) {
                 $this->setCategory($data['category']);
             }
-            if(isset($data['user']) && $data['user'] instanceof User) {
+          if(isset($data['user']) && $data['user'] instanceof User) {
                 $this->setUser($data['user']);
             }
-        $this->setDescription($data['description'] ?? '');
+          if(isset($data['description'])) {
+            $this->setDescription($data['description']);
+            }
+        
 
       } }
 
@@ -123,7 +127,7 @@ public function setCategory(Category $category):void {
 public function getIngredients(): array {
       return $this->ingredients;
 }  
-/** @param RecipeIngredientModel[] $ingredients */
+/** @param RecipeIngredien[] $ingredients */
 public function setIngredients(array $ingredients) :void {
 
     $this->ingredients = $ingredients;

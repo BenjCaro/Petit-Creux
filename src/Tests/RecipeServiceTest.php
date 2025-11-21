@@ -70,22 +70,56 @@ class RecipeServiceTest extends TestCase {
             'slug' => 'croissant-au-jambon',
             'id_user' => 1,
             'id_category' => 1,
-            'createdAt' => '18/11/2025',
             'duration' => 15,
-            'state' => 'pending',
-            'id_recipe' => 1,
-            'id_ingredient' => [12],
-            'quantity' => [250],
-            'unit' => ['ml'],
+
+           
+            'ingredients' => [12],
+            'quantites'   => [250],
+            'unit'        => ['ml'],
+
             'step_number' => [1],
-            'texte' => ["Trempez dans l'huile"],
-            'id_recipe' => 1
-            ];
+            'texte'       => ["Trempez dans l'huile"],
+        ];
+
      
      $newRecipe = $this->recipeService->createRecipe($data);
      $this->assertInstanceOf(Recipe::class, $newRecipe);
      $this->assertSame('Croissant au Jambon', $newRecipe->getTitle());
     }
+
+    public function testTitleErrorCreateRecipe() :void {
+        $data = [
+            'title' => null,
+            'slug' => 'croissant-au-jambon',
+            'id_user' => 1,
+            'id_category' => 1,
+            'duration' => 15,
+
+           
+            'ingredients' => [12],
+            'quantites'   => [250],
+            'unit'        => ['ml'],
+
+            'step_number' => [1],
+            'texte'       => ["Trempez dans l'huile"],
+        ];
+
+        try {
+
+            $newRecipe = $this->recipeService->createRecipe($data);
+            $this->fail("Une validationException aurait dû être levée!");
+
+
+        } catch(ValidationException $e) {
+            $errors = $e->getErrors();
+            $this->assertArrayHasKey('title', $errors);
+            $this->assertEquals("Veuillez donner un titre à la recette.", $errors['title']);
+        }
+
+
+
+    }
 }
 
-// .\vendor\bin\phpunit.bat .\src\Tests\RecipeServiceTest.php
+// .\vendor\bin\phpunit.bat --display-deprecations .\src\Tests\RecipeServiceTest.php
+// .\vendor\bin\phpunit.bat --display-warnings .\src\Tests\RecipeServiceTest.php
