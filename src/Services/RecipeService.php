@@ -25,10 +25,10 @@ class RecipeService {
         $this->descriptionRepo = $descriptionRepo;
     }
 
-    public function createRecipe(array $data) //:?Recipe 
+    public function createRecipe(array $data) :?Recipe 
     {
-        $token = $data['_token'];
-        Csrf::check('addRecipeForm', $token, '/add-recipe');
+        // $token = $data['_token'];
+        // Csrf::check('addRecipeForm', $token, '/add-recipe');
 
         $title = trim($data['title']);
         $slug = trim($data["slug"]);
@@ -128,8 +128,11 @@ class RecipeService {
 
            $pdo->commit();
 
+           return $recipe;
+
         } catch(Exception $e) {
             $pdo->rollBack();
+            return null;
         }
 
         

@@ -18,7 +18,7 @@ class Recipe {
     private string $state;
     private Category $category;
     private User $user;
-  //  private array $description = [];
+    private array $description = [];
 
     public function __construct(array $data = []) {
         
@@ -41,7 +41,7 @@ class Recipe {
             if(isset($data['user']) && $data['user'] instanceof User) {
                 $this->setUser($data['user']);
             }
-        //  $this->setDescription($data['description'] ?? '');
+        $this->setDescription($data['description'] ?? '');
 
       } }
 
@@ -138,13 +138,13 @@ public function setUser(User $user) :void{
     $this->user = $user;
 }
 
-// public function getDescription() : array{
-//     return $this->description;
-// }
+public function getDescription() : array{
+    return $this->description;
+}
 
-// /** @param Description[] $description */
-// public function setDescription(array $description) : void {
-//     $this->description = $description;
-// } 
+/** @param Description[] $description */
+public function setDescription(array $description) : void {
+    $this->description = $description;
+} 
 
 }
