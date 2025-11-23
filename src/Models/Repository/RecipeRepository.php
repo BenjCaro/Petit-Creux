@@ -46,9 +46,9 @@ public function createRecipe(Recipe $recipe) :bool {
 
 public function existRecipeWithTitle(string $title) :bool  {
     
-    $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM recipes WHERE title LIKE :title");
+    $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM recipes WHERE title = :title");
     $stmt->execute([
-        'title' => "%$title%"
+        'title' => "$title"
     ]);
 
     return (int)$stmt->fetchColumn() > 0;
