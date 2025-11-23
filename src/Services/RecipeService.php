@@ -53,6 +53,9 @@ class RecipeService {
             $errors['title'] = "Veuillez donner un titre à la recette.";
         }
 
+        // Ajouter d'autres controles sur le $title :
+        // Verifier que le titre n'existe pas déja. 
+
         if(empty($idUser)) {
             $errors['id_user'] = 'Veuillez vous reconnecter à votre compte.';
         }

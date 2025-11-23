@@ -16,18 +16,32 @@ class RecipeRepositoryTest extends TestCase {
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $this->pdo->exec('
-    CREATE TABLE recipes (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT UNIQUE NOT NULL,
-        slug TEXT UNIQUE NOT NULL,
-        id_user INT NOT NULL,
-        id_category INT NOT NULL,
-        createdAt TEXT,
-        duration INT NOT NULL,
-        state TEXT NOT NULL DEFAULT \'pending\',
-        CHECK (state IN (\'pending\', \'published\'))
-    )
-');
+            CREATE TABLE recipes (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                title TEXT UNIQUE NOT NULL,
+                slug TEXT UNIQUE NOT NULL,
+                id_user INT NOT NULL,
+                id_category INT NOT NULL,
+                createdAt TEXT,
+                duration INT NOT NULL,
+                state TEXT NOT NULL DEFAULT \'pending\',
+                CHECK (state IN (\'pending\', \'published\'))
+                    )
+                ');
+
+        $stmt =  $this->pdo->prepare("
+            INSERT INTO recipes (title, slug, id_user, id_category, createdAt, duration, state) 
+            VALUES (:title, :slug, :id_user, :id_category, :createdAt, :duration, :state)");
+
+            $stmt->execute([
+                'title' => 'Pizza',
+                'slug' => 'pizza',
+                'id_user' => 1,
+                'id_category'=> 1,
+                'duration' => 15,
+                'createdAt' => '',
+                'state' => 'pending'
+            ]);
 
     Database::createForTest($this->pdo);
     $this->recipeRepository = new RecipeRepository($this->pdo);
@@ -55,6 +69,18 @@ class RecipeRepositoryTest extends TestCase {
      $this->assertSame('Croissant au Jambon', $row['title']);
      $this->assertSame('croissant-au-jambon', $row['slug']);
      $this->assertSame(15, $row['duration']);
+ }
+
+ public function testExistRecipeWithTitle() :void {
+     
+    $result =  $this->recipeRepository->existRecipeWithTitle('Pizza');
+    $this->assertTrue($result, 'La recette "Pizza" devrait exister');
+ }
+
+ public function testExistRecipeWithDoesntExistTitle() :void {
+    
+    $result =  $this->recipeRepository->existRecipeWithTitle('Burger');
+    $this->assertFalse($result, 'La recette "Burger" ne devrait pas exister');
  }
 }
 
