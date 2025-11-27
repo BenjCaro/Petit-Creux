@@ -55,6 +55,11 @@ class RecipeServiceTest extends TestCase {
               id_recipe INT NOT NULL
             )');
 
+         $this->pdo->exec("
+            INSERT INTO recipes (title, slug, id_user, id_category, createdAt, duration, state)
+            VALUES ('Recette Test', 'recette-test', 1, 1, datetime('now'), 30, 'pending')
+        ");    
+
         Database::createForTest($this->pdo);
         $this->recipeRepository = new RecipeRepository($this->pdo);
         $this->recipeIngredientRepo = new RecipeIngredientRepository($this->pdo);
@@ -116,8 +121,37 @@ class RecipeServiceTest extends TestCase {
             $this->assertEquals("Veuillez donner un titre à la recette.", $errors['title']);
         }
 
+    }
 
+    public function testCreateRecipeWithExistingTitle() :void {
+        $data = [
+            'title' => 'Recette Test',
+            'slug' => 'recette-test',
+            'id_user' => 1,
+            'id_category'=> 1,
+            'createdAt' =>'',
+            'duration' => 30,
+            'state' => 'pending',
 
+            'ingredients' => [12],
+            'quantites'   => [250],
+            'unit'        => ['grammes'],
+
+            'step_number' => [1],
+            'texte'       => ["Etape test"],
+
+        ];
+
+        
+
+        try {
+            $recipe = $this->recipeService->createRecipe($data);
+            $this->fail("Une validationException aurait dû être levée!");
+        } catch(ValidationException $e) {
+            $errors = $e->getErrors();
+            $this->assertArrayHasKey('title', $errors);
+            $this->assertEquals("Le titre de la recette existe déja sur Petit-Creux", $errors['title']);
+        }
     }
 }
 
