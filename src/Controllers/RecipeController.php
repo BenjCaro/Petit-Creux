@@ -17,10 +17,19 @@ class RecipeController extends BaseController {
     }
 
     public function NewRecipeForm() :void {
-       
-        $this->render("addRecipe", [
-            "title" => "Petit Creux | Création de recette"
-        ]);
+
+        if(Auth::isAuth()) {
+                $this->render("addRecipe", [
+                "title" => "Petit Creux | Création de recette"
+            ]);
+        } 
+        else {
+            Flash::set("Connectez vous pour partager votre recette", "secondary");
+            header("location: /login");
+            exit;
+        }
+        
+        
     }
 
     public function newRecipe() :void {
