@@ -3,7 +3,6 @@
 use PHPUnit\Framework\TestCase;
 use Carbe\Petitcreuxv2\Models\Entites\User;
 use Carbe\Petitcreuxv2\Models\Repository\UserRepository;
-use Carbe\Petitcreuxv2\Models\Repository\BaseRepository;
 use Carbe\Petitcreuxv2\Core\Database;
 
 

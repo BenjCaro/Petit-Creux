@@ -15,26 +15,37 @@ class Recipe {
     private int $idCategory;
     private string $createdAt;
     private int $duration;
-    private ?string $description;
     private string $state;
     private Category $category;
     private User $user;
-     
+    private array $description = [];
 
     public function __construct(array $data = []) {
         
        
       if (!empty($data)) {
         
-          $this->id = $data['id'] ?? null;
-          $this->title = $data['title'] ?? '';
-          $this->slug = $data['slug'] ?? '';
-          $this->idUser = $data['idUser'] ?? '';
-          $this->idCategory = $data['idCategory'] ?? ''; 
-          $this->createdAt = $data['createdAt'] ?? date('Y-m-d');
-          $this->duration = $data['duration'] ?? null;
-          $this->state = $data['state'] ?? date('Y-m-d');
-          $this->category = $data["category"] ?? '';
+          if (isset($data['id'])) {
+                $this->setId((int)$data['id']);
+            }
+          $this->setTitle($data['title'] ?? '');
+          $this->setSlug($data['slug'] ?? '');
+          
+          $this->setIdUser((int)$data['id_user']);
+          $this->setIdCategory((int)$data['id_category']);
+          $this->setCreatedAt($data['createdAt'] ?? date('Y-m-d'));
+          $this->setDuration((int)$data['duration']);
+          $this->setState($data['state'] ??'');
+          if (isset($data['category']) && $data['category'] instanceof Category) {
+                $this->setCategory($data['category']);
+            }
+          if(isset($data['user']) && $data['user'] instanceof User) {
+                $this->setUser($data['user']);
+            }
+          if(isset($data['description'])) {
+            $this->setDescription($data['description']);
+            }
+        
 
       } }
 
@@ -97,14 +108,6 @@ public function setDuration(int $duration) :void {
      $this->duration = $duration;
   }
 
-public function getDescription() :?string {
-     return $this->description;
-  }
-
-public function setDescription(?string $description) :void {
-    $this->description = $description;
-  }
-
 public function getState() :string {
     return $this->state;
 }
@@ -124,7 +127,7 @@ public function setCategory(Category $category):void {
 public function getIngredients(): array {
       return $this->ingredients;
 }  
-/** @param RecipeIngredientModel[] $ingredients */
+/** @param RecipeIngredien[] $ingredients */
 public function setIngredients(array $ingredients) :void {
 
     $this->ingredients = $ingredients;
@@ -138,5 +141,14 @@ public function getUser() :User {
 public function setUser(User $user) :void{
     $this->user = $user;
 }
+
+public function getDescription() : array{
+    return $this->description;
+}
+
+/** @param Description[] $description */
+public function setDescription(array $description) : void {
+    $this->description = $description;
+} 
 
 }
