@@ -62,6 +62,6 @@ use Carbe\Petitcreuxv2\Helpers\Flash;
                 </div>
             </div>
         </section>
-        <a class="btn btn-dark w-100" href="/ajout-recette">Partager une recette avec nous</a>   
+        <a class="btn btn-dark w-100" href="/add-recipe">Partager une recette avec nous</a>   
     </div>
 </main>

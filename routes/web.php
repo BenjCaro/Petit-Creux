@@ -2,6 +2,7 @@
 
 use Carbe\Petitcreuxv2\Core\Container;
 use Carbe\Petitcreuxv2\Controllers\HomeController;
+use Carbe\Petitcreuxv2\Controllers\RecipeController;
 use Carbe\Petitcreuxv2\Controllers\UserController;
 
 $container = new Container();
@@ -43,4 +44,12 @@ $router->map('GET', '/logout', function() use ($container) {
 
     $deconnexion = $container->get(UserController::class);
     $deconnexion->deconnexion();
+});
+
+
+$router->map('GET', '/add-recipe', function() use ($container) {
+
+    $newRecipe = $container->get(RecipeController::class);
+    $newRecipe->newRecipeForm();
+
 });

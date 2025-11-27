@@ -28,8 +28,8 @@ class RecipeService {
 
     public function createRecipe(array $data) :?Recipe 
     {
-        // $token = $data['_token'];
-        // Csrf::check('addRecipeForm', $token, '/add-recipe');
+        $token = $data['_token'];
+        Csrf::check('addRecipeForm', $token, '/add-recipe');
 
         $title = trim($data['title'] ?? '');
         $idUser = $data['id_user'];
