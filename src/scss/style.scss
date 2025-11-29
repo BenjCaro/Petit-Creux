@@ -34,3 +34,13 @@ body {
   justify-content: space-between;
   font-family: 'PlayfairDisplay';
 }
+
+// Page addRecipe.php
+
+.step {
+  display : none;
+}
+
+.step.active {
+  display: block;
+}

@@ -5,7 +5,7 @@ use Carbe\Petitcreuxv2\Helpers\Flash;
 ?>
 
 
-<main class='container p-3 bg-light'>
+<main class='container p-3 bg-light flex-grow-1'>
     <?php
      $messages = Flash::get();
      foreach($messages as $message) { ?>
