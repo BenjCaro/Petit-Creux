@@ -2,11 +2,13 @@
 
 namespace Carbe\Petitcreuxv2\Models\Repository;
 use Carbe\Petitcreuxv2\Models\Repository\BaseRepository;
-use PDO;
+use Carbe\Petitcreuxv2\Models\Entites\Favori;
+
 
 class FavorisRepository extends BaseRepository {
 
     protected string $table = "favoris";
+    protected string $modelClass = Favori::class;
 
 /**
  * @param array<string, mixed> $data

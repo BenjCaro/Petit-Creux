@@ -5,7 +5,7 @@ namespace Carbe\Petitcreuxv2\Models\Entites;
 use Carbe\Petitcreuxv2\Models\Entites\User;
 use Carbe\Petitcreuxv2\Models\Entites\Recipe;
 
-class Post {
+class Post extends BaseEntite {
       
    private string $title;
    private string $content;

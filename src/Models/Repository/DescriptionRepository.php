@@ -6,6 +6,7 @@ use Carbe\Petitcreuxv2\Models\Entites\Description;
 class DescriptionRepository extends BaseRepository {
 
     protected string $table = "descriptions";
+    protected string $modelClass = Description::class;
     
     public function __construct()
     {

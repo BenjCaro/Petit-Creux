@@ -9,6 +9,7 @@ use Carbe\Petitcreuxv2\Models\Repository\BaseRepository;
 class RecipeIngredientRepository extends BaseRepository {
 
     protected string $table= "recipes_ingredients";
+    protected string $modelClass = RecipeIngredient::class;
     
 /**
  * @param array<string, mixed> $data

@@ -3,7 +3,7 @@
 namespace Carbe\Petitcreuxv2\Models\Entites;
 
 
-class Favoris {
+class Favori extends BaseEntite {
     
     private int $id;
     private int $idUser; 

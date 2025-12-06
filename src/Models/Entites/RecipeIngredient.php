@@ -3,7 +3,7 @@
 namespace Carbe\Petitcreuxv2\Models\Entites;
 use Carbe\Petitcreuxv2\Models\Entites\Recipe;
 
-class RecipeIngredient 
+class RecipeIngredient  extends BaseEntite
 {
    
     private int $id_recipe;

@@ -17,6 +17,7 @@ class RecipeRepository extends BaseRepository {
 
 
  protected string $table = 'recipes';
+ protected string $modelClass = Recipe::class;
  public function __construct()
     {
         parent::__construct();

@@ -2,7 +2,7 @@
 
 namespace Carbe\Petitcreuxv2\Models\Entites;
 
-class Description {
+class Description extends BaseEntite {
      
     private ?int $id;
     private int $step_number;

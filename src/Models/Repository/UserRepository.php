@@ -15,6 +15,8 @@ class UserRepository extends BaseRepository  {
 * @param array <string, mixed> $data
 */
  protected string $table = 'users';
+ protected string $modelClass = User::class;
+
  public function __construct() {
       
     parent::__construct();
@@ -71,7 +73,8 @@ public function getFavoris(int $userId) :array {
 
       $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
       if (!empty($data)) {
-        $this->hydrate([
+        $user = new $this->modelClass();
+        $user->hydrate([
             'id' => $data[0]['id'], 
             'username' => $data[0]['username'],
             'name' => $data[0]['user_name'], 

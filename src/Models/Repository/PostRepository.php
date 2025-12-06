@@ -11,6 +11,7 @@ use PDO;
 class PostRepository extends BaseRepository {
    
    protected string $table = 'posts';
+   protected string $modelClass = Post::class;
 /**
  * @param array<string, mixed> $data
  */

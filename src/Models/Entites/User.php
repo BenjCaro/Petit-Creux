@@ -4,7 +4,7 @@ namespace Carbe\Petitcreuxv2\Models\Entites;
 
 use Carbe\Petitcreuxv2\Exceptions\ValidationException;
 
-class User {
+class User extends BaseEntite {
   
   private ?int $id;
   private string $username;

@@ -2,13 +2,14 @@
 
 namespace Carbe\Petitcreuxv2\Models\Repository;
 
+use Carbe\Petitcreuxv2\Models\Entites\Ingredient;
 use Carbe\Petitcreuxv2\Models\Repository\BaseRepository;
 use PDO;
 
 class IngredientRepository extends BaseRepository {
 
     protected string $table = 'ingredients';
-
+    protected string $modelClass = Ingredient::class;
 /**
  * @param array<string, mixed> $data
  */
