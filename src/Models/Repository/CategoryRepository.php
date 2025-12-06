@@ -9,6 +9,7 @@ use PDO;
 class CategoryRepository extends BaseRepository {
     
     protected string $table = "categories";
+    protected string $modelClass = Category::class;
 
 
   /**

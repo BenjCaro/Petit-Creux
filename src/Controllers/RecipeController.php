@@ -5,6 +5,7 @@ use Carbe\Petitcreuxv2\Exceptions\ValidationException;
 use Carbe\Petitcreuxv2\Helpers\Flash;
 use Carbe\Petitcreuxv2\Helpers\Auth;
 use Carbe\Petitcreuxv2\Models\Entites\Recipe;
+use Carbe\Petitcreuxv2\Models\Repository\CategoryRepository;
 use Carbe\Petitcreuxv2\Services\RecipeService;
 
 class RecipeController extends BaseController {
@@ -18,8 +19,12 @@ class RecipeController extends BaseController {
 
     public function NewRecipeForm() :void {
 
+        $categorieRepo = new CategoryRepository();
+        $categories = $categorieRepo->findAll();
+
         $this->render("addRecipe", [
-                "title" => "Petit Creux | Création de recette"
+                "title" => "Petit Creux | Création de recette",
+                "categories" => $categories
             ]);
 
         // if(Auth::isAuth()) {

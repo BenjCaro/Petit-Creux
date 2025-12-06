@@ -10,6 +10,7 @@ class BaseRepository {
 
     protected PDO $pdo;
     protected string $table;
+    protected string $modelClass;
 
     public function __construct() {
         $this->pdo = Database::getInstance()->getConnect();
@@ -51,7 +52,7 @@ class BaseRepository {
 
         foreach($result as $data) {
             
-            $object = new static($this->pdo); 
+            $object = new $this->modelClass();
             $object->hydrate($data);
             $objects[] = $object;  
         }
