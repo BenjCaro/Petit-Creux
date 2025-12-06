@@ -2,7 +2,7 @@
 
 namespace Carbe\Petitcreuxv2\Models\Entites;
 
-class Category {
+class Category extends BaseEntite {
 
     private int $id;
     private string $name;

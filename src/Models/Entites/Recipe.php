@@ -5,7 +5,7 @@ namespace Carbe\Petitcreuxv2\Models\Entites;
 use Carbe\Petitcreuxv2\Models\Entites\User;
 use Carbe\Petitcreuxv2\Models\Entites\Category;
 
-class Recipe {
+class Recipe extends BaseEntite {
 
     private array $ingredients = [];
     private int $id;

@@ -1,7 +1,7 @@
 <?php 
 namespace Carbe\Petitcreuxv2\Models\Entites;
 
-class Ingredient {
+class Ingredient extends BaseEntite {
 
     private int $id;
     private string $name;

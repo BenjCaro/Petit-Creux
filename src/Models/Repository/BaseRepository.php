@@ -10,6 +10,7 @@ class BaseRepository {
 
     protected PDO $pdo;
     protected string $table;
+    protected string $modelClass;
 
     public function __construct() {
         $this->pdo = Database::getInstance()->getConnect();
@@ -23,7 +24,7 @@ class BaseRepository {
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($data) {
-        $object = new static($this->pdo); // instancie la classe enfant qui appelle findById
+        $object = new $this->modelClass();
         $object->hydrate($data);
         return $object;
     }
@@ -51,7 +52,7 @@ class BaseRepository {
 
         foreach($result as $data) {
             
-            $object = new static($this->pdo); 
+            $object = new $this->modelClass();
             $object->hydrate($data);
             $objects[] = $object;  
         }
@@ -79,23 +80,6 @@ class BaseRepository {
     $stmt->execute($data);
 }
 
-
-
-/**
- *  @param array<string, mixed> $data
- */
-
-
-    public function hydrate(array $data): void {
-
-        foreach ($data as $key => $value) {
-            $camelCaseKey = lcfirst(str_replace('_', '', ucwords($key, '_')));
-            $method = 'set' . ucfirst($camelCaseKey);
-            if (method_exists($this, $method)) {
-                $this->$method($value);
-            }
-        }
-    }
 
     public function delete(int $id) : bool { // supprimer une donnée (ex: un utilisateur, une recette, un commentaire, etc...)
 
