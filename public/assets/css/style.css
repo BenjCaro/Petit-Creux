@@ -11906,4 +11906,12 @@ body {
   font-family: "PlayfairDisplay";
 }
 
+.step {
+  display: none;
+}
+
+.step.active {
+  display: block;
+}
+
 /*# sourceMappingURL=style.css.map */
